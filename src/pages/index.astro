@@ -1,16 +1,162 @@
 ---
+// src/pages/index.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
 
+const pageTitle = "Eraneos UK | Enabling You To Win"; // Updated title
+const pageDescription = "As a European challenger, Eraneos UK empowers organizations to thrive through sustainable transformation. Future-proof solutions from your trusted digital partner.";
 ---
+<BaseLayout title={pageTitle} description={pageDescription}>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+       <!-- Hero Section: "Enabling you to win" -->
+    <section class="hero-section-eraneos">
+        <div class="hero-background-pattern">
+            <!-- The dot pattern from eraneos.com would be a background image or SVG here -->
+        </div>
+        <div class="hero-content-eraneos">
+            <h1>Enabling you to win</h1>
+            <p>
+                As a European challenger, we empower organizations to thrive
+                through sustainable transformation.
+            </p>
+            <a href="https://www.eraneos.com/en/about-us/" target="_blank" rel="noopener noreferrer" class="cta-button-eraneos">
+                Find out more
+            </a>
+        </div>
+    </section>
+
+    <!-- Future Proof Solutions Section -->
+    <section class="future-proof-section">
+        <div class="container-eraneos">
+            <div class="future-proof-content">
+                <h2>Future proof solutions</h2>
+                <p>
+                    As an international strategy, transformation, and technology consulting
+                    group, we help you turn change into impact. From crafting tailored strategies
+                    to turning businesses into digital leaders, designing future-ready
+                    organizations, unlocking the full potential of data and AI, and delivering
+                    comprehensive cybersecurity and risk management solutions – we enable
+                    you to win.
+                </p>
+                <p>
+                    Our experts combine deep industry knowledge with technological expertise
+                    to guide your business through complex changes and achieve measurable success.
+                    We partner with you to build resilient, innovative, and sustainable
+                    digital futures.
+                </p>
+            </div>
+            <div class="future-proof-image">
+                <img src="https://via.placeholder.com/500x600.png/e0e0e0/969696?text=Placeholder+Image" alt="Team discussing solutions" />
+            </div>
+        </div>
+    </section>
+
+</BaseLayout>
+
+<style>
+    /* Inherits base font from BaseLayout */
+    .container-eraneos {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    /* Hero Section: "Enabling you to win" */
+    .hero-section-eraneos {
+        background-color: #111111;
+        color: #ffffff;
+        padding: 8rem 1rem;
+        text-align: left;
+        position: relative;
+        overflow: hidden;
+        min-height: 60vh; /* Adjusted slightly */
+        display: flex;
+        align-items: center;
+    }
+
+    .hero-background-pattern { /* Placeholder */ }
+
+    .hero-content-eraneos {
+        max-width: 620px; /* Slightly more width */
+        position: relative;
+        z-index: 1;
+        margin-left: calc((100% - 1140px)/2 + 1rem); /* Align with container */
+    }
+    @media (max-width: 1200px) {
+        .hero-content-eraneos { margin-left: 2rem; margin-right: 2rem; }
+    }
+    @media (max-width: 768px) {
+        .hero-section-eraneos { text-align: center; padding: 6rem 1rem; }
+        .hero-content-eraneos { margin-left: auto; margin-right: auto; }
+    }
+
+    .hero-content-eraneos h1 {
+        font-size: 3.5rem; /* Adjusted */
+        font-weight: 700; /* Bolder like eraneos.com */
+        line-height: 1.15; /* Tighter line height for large headings */
+        margin-bottom: 1.5rem;
+        color: #ffffff;
+    }
+
+    .hero-content-eraneos p {
+        font-size: 1.15rem; /* Adjusted */
+        margin-bottom: 2.5rem;
+        max-width: 520px;
+        line-height: 1.7;
+        color: #e0e0e0;
+    }
+
+    .cta-button-eraneos {
+        background-color: #ff5f00; /* Eraneos Orange */
+        color: #ffffff !important;
+        padding: 0.9rem 2.2rem; /* Adjusted padding */
+        text-decoration: none;
+        border-radius: 25px; /* Pill shape */
+        font-weight: 500; /* Medium weight */
+        font-size: 1rem;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        display: inline-block;
+    }
+    .cta-button-eraneos:hover {
+        background-color: #e05300;
+        transform: translateY(-2px);
+        text-decoration: none;
+    }
+
+    /* Future Proof Solutions Section */
+    .future-proof-section {
+        padding: 5rem 0;
+        background-color: #ffffff;
+    }
+    .future-proof-section .container-eraneos {
+        display: flex;
+        align-items: center;
+        gap: 3.5rem; /* More gap */
+    }
+    .future-proof-content { flex: 1; order: 1; }
+    .future-proof-content h2 {
+        font-size: 2.5rem; /* Adjusted */
+        color: #212529;
+        margin-bottom: 1.5rem; /* Less margin */
+        font-weight: 700; /* Bolder */
+        line-height: 1.2;
+    }
+    .future-proof-content p {
+        font-size: 1rem;
+        line-height: 1.8;
+        color: #555555;
+        margin-bottom: 1.5rem;
+    }
+    .future-proof-image { flex-basis: 45%; max-width: 45%; text-align: right; order: 2; }
+    .future-proof-image img { max-width: 100%; height: auto; border-radius: 8px; }
+
+    @media (max-width: 992px) {
+        .hero-content-eraneos h1 { font-size: 2.8rem; }
+        .future-proof-section .container-eraneos { flex-direction: column; }
+        .future-proof-content, .future-proof-image { max-width: 100%; flex-basis: auto; order: 0; text-align: center; }
+        .future-proof-image { margin-top: 2.5rem; }
+        .future-proof-content h2 { font-size: 2rem; }
+    }
+    @media (max-width: 768px) {
+        .hero-content-eraneos h1 { font-size: 2.2rem; }
+    }
+</style>

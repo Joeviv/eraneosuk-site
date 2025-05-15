@@ -1,0 +1,305 @@
+---
+// src/pages/about.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "About Eraneos UK | Cyber Security & Digital Transformation";
+const pageDescription = "Eraneos UK is strengthening its cyber security capabilities and establishing a dedicated team to serve the United Kingdom market. Learn about our commitment to digital trust and innovation, and meet our key experts.";
+
+// This URL is for the main article image, not the team section
+const aboutPageImageUrl = "https://via.placeholder.com/800x400.png/e0e0e0/666666?text=Eraneos+UK+Initiative";
+
+const ukTeamMembers = [
+    {
+        name: "Julian Meyrick",
+        title: "Partner & Managing Director UK",
+        email: "julian.meyrick@eraneos.com",
+        imageUrl: "/images/team/julian-meyrick.jpg" // Corrected path
+    },
+    {
+        name: "Robert Smith",
+        title: "Senior Manager Cybersecurity",
+        email: "robert.smith@eraneos.com",
+        imageUrl: "/images/team/robert-smith.jpg" // Corrected path
+    },
+    {
+        name: "Adriana Langdon",
+        title: "Senior Cybersecurity Consultant",
+        email: "adriana.langdon@eraneos.com",
+        imageUrl: "/images/team/adriana-langdon.jpg" // Corrected path
+    },
+    {
+        name: "Richard Shore",
+        title: "Managing Consultant – Life Sciences",
+        email: "richard.shore@eraneos.com",
+        imageUrl: "/images/team/richard-shore.jpg" // Corrected path
+    },
+    {
+        name: "Andrew Van Der Laan",
+        title: "Managing Consultant – Life Sciences",
+        email: "andrew.van.der.laan@eraneos.com",
+        imageUrl: "/images/team/andrew.jpg"
+    }
+];
+---
+<BaseLayout title={pageTitle} description={pageDescription}>
+    <div class="container article-layout">
+        <h1>Eraneos Enhances Its Cyber Security Capacity and Establishes Team in the UK</h1>
+
+        <p class="intro">
+            Eraneos, the global management and technology consulting group, is significantly
+            expanding its cyber security services and establishing a dedicated presence in
+            the United Kingdom. This strategic move underscores Eraneos' commitment to
+            addressing the growing demand for robust cyber security solutions and digital
+            trust in the UK market.
+        </p>
+
+        <figure class="featured-image">
+            <img src={aboutPageImageUrl} alt="Eraneos UK initiative illustration" />
+            <figcaption>Eraneos is committed to supporting UK businesses with advanced cyber security and digital transformation solutions.</figcaption>
+        </figure>
+
+        <section class="content-section">
+            <h2>Strengthening Cyber Security Expertise in the UK</h2>
+            <p>
+                The new UK team will initially focus on bolstering Eraneos' comprehensive
+                cyber security offerings. These services are designed to help organisations
+                protect their critical assets, manage risks effectively, and build resilient
+                digital infrastructures. Key areas of focus will include:
+            </p>
+            <ul>
+                <li>Cyber Security Strategy & Governance</li>
+                <li>Threat Detection & Response</li>
+                <li>Data Protection & Privacy</li>
+                <li>Cloud Security</li>
+                <li>Security Awareness & Training</li>
+            </ul>
+            <p>
+                By establishing a local team of seasoned cyber security professionals, Eraneos UK
+                aims to provide tailored, on-the-ground support to businesses across various
+                sectors, including finance, healthcare, and public services.
+            </p>
+        </section>
+
+        <section class="content-section">
+            <h2>Commitment to the UK Market</h2>
+            <p>
+                "The United Kingdom is a vital digital hub, and we see tremendous potential
+                to support UK businesses in their digital transformation journeys, particularly
+                in ensuring their operations are secure and trustworthy," a spokesperson for
+                Eraneos commented. "Our investment in a UK-based team reflects our long-term
+                commitment to this market and our dedication to providing clients with
+                world-class expertise combined with local insights."
+            </p>
+            <p>
+                While the initial focus is on cyber security, Eraneos UK plans to gradually
+                expand its service portfolio to encompass the full range of Eraneos' digital
+                transformation capabilities, including data & AI, digital business & innovation,
+                and technology consulting.
+            </p>
+        </section>
+
+        <!-- MEET THE TEAM SECTION - NEW -->
+        <section class="meet-the-team-section">
+            <div class="team-section-header">
+                <span class="eyebrow-text">Contact our experts</span>
+                <h2>Let's talk</h2>
+            </div>
+            <div class="team-grid">
+                {ukTeamMembers.map(member => (
+                    <div class="team-member-profile">
+                        <div class="team-member-image-wrapper">
+                            <img src={member.imageUrl} alt={`Portrait of ${member.name}`} class="team-member-image" />
+                        </div>
+                        <div class="team-member-details">
+                            <h3 class="team-member-name">{member.name}</h3>
+                            <p class="team-member-title">{member.title}</p>
+                            <a href={`mailto:${member.email}`} class="team-member-email">{member.email}</a>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </section>
+        <!-- END MEET THE TEAM SECTION -->
+
+
+        <section class="content-section">
+            <h2>About Eraneos Group</h2>
+            <p>
+                Eraneos Group is an international management & technology consulting firm
+                that shapes a digital tomorrow clients and societies can trust. With a
+                strong global presence and a deep understanding of digital trends, Eraneos
+                partners with organisations to navigate change and achieve sustainable impact.
+            </p>
+            <p>
+                For more information about our global operations, please visit the main
+                <a href="https://www.eraneos.com/en/about-us/" target="_blank" rel="noopener noreferrer">Eraneos Group website</a>.
+            </p>
+        </section>
+    </div>
+</BaseLayout>
+
+<style>
+    /* Inherits base font from BaseLayout */
+    .container.article-layout {
+        max-width: 960px;
+        margin: 2rem auto 4rem auto;
+        padding: 1rem;
+        line-height: 1.7;
+        color: #212529;
+    }
+
+    .article-layout h1 {
+        font-size: 2.2rem;
+        color: #212529;
+        margin-bottom: 1rem;
+        line-height: 1.3;
+        font-weight: 700;
+    }
+
+    .article-layout h2 {
+        font-size: 1.8rem;
+        color: #212529;
+        margin-top: 3rem;
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 0.5rem;
+        font-weight: 600;
+    }
+
+    .article-layout p.intro {
+        font-size: 1.15rem;
+        color: #555;
+        margin-bottom: 2.5rem;
+    }
+
+    .featured-image {
+        margin: 2.5rem 0;
+        text-align: center;
+    }
+    .featured-image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .featured-image figcaption {
+        font-size: 0.85rem;
+        color: #777;
+        margin-top: 0.75rem;
+        font-style: italic;
+        text-align: center;
+    }
+
+    .article-layout p { margin-bottom: 1.2rem; }
+    .article-layout ul { list-style-type: disc; padding-left: 25px; margin-bottom: 1.2rem; }
+    .article-layout li { margin-bottom: 0.6rem; }
+    .article-layout a {
+        color: #ff5f00;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .article-layout a:hover {
+        color: #e05300;
+        text-decoration: underline;
+    }
+    .content-section { margin-bottom: 2rem; }
+
+
+    /* --- MEET THE TEAM SECTION STYLES --- */
+    .meet-the-team-section {
+        padding: 3rem 0;
+        margin-top: 3rem;
+        border-top: 1px solid #f0f0f0;
+    }
+
+    .team-section-header {
+        text-align: left;
+        margin-bottom: 2.5rem;
+    }
+
+    .team-section-header .eyebrow-text {
+        display: block;
+        font-size: 0.9rem;
+        color: #555;
+        margin-bottom: 0.25rem;
+        font-weight: 500;
+        text-transform: uppercase;
+    }
+
+    .team-section-header h2 { /* This targets the "Let's talk" */
+        font-size: 2.8rem;
+        font-weight: 700;
+        color: #212529;
+        border-bottom: none;
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2.5rem;
+    }
+
+    .team-member-profile {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.5rem;
+        padding: 1rem 0;
+    }
+
+    .team-member-image-wrapper {
+        flex-shrink: 0;
+    }
+
+    .team-member-image {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #e0e0e0;
+    }
+
+    .team-member-details {
+        flex-grow: 1;
+    }
+
+    .team-member-name {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #212529;
+        margin-top: 0;
+        margin-bottom: 0.25rem;
+    }
+
+    .team-member-title {
+        font-size: 0.9rem;
+        color: #555;
+        margin-bottom: 0.5rem;
+        line-height: 1.4;
+    }
+
+    .team-member-email {
+        font-size: 0.9rem;
+        color: #ff5f00;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .team-member-email:hover {
+        text-decoration: underline;
+        color: #e05300;
+    }
+
+    @media (max-width: 768px) {
+        .team-grid {
+            grid-template-columns: 1fr;
+        }
+        .team-section-header h2 {
+            font-size: 2.2rem;
+        }
+    }
+</style>

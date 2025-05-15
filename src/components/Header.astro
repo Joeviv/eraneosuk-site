@@ -1,0 +1,180 @@
+---
+// src/components/Header.astro
+const navLinks = [
+    { href: "https://www.eraneos.com/en/industries/", text: "Industries" },
+    { href: "https://www.eraneos.com/en/services/", text: "Services" },
+    { href: "https://www.eraneos.com/en/our-impact/", text: "Our impact" },
+    { href: "https://www.eraneos.com/en/knowledge-hub/", text: "Knowledge hub" },
+    { href: "/about", text: "About us" },
+    { href: "/careers", text: "Career" },
+];
+
+const contactUsLink = { href: "/contact", text: "Contact us" };
+
+const logoText = "eraneos";
+---
+<header class="site-header">
+    <div class="container">
+        <a href="/" class="logo">{logoText}</a>
+        <nav class="main-navigation">
+            <ul>
+                {navLinks.map(link => (
+                    <li>
+                        {link.href.startsWith('/') ? (
+                            <a href={link.href}>{link.text}</a>
+                        ) : (
+                            <a href={link.href} target="_blank" rel="noopener noreferrer">{link.text}</a>
+                        )}
+                    </li>
+                ))}
+            </ul>
+        </nav>
+        <div class="header-actions">
+            <a href={contactUsLink.href} class="contact-button">{contactUsLink.text}</a>
+            <div class="language-selector">
+                <span>EN</span> {/* Placeholder, add chevron later if desired V */}
+            </div>
+            <div class="search-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+        </div>
+    </div>
+</header>
+
+<style>
+    .site-header {
+        background-color: #ffffff;
+        padding: 1rem 0; /* Original Eraneos header can be taller, adjust if needed */
+        border-bottom: 1px solid #e0e0e0; /* Common border color */
+        /* Using a robust system font stack that aims for clarity like Founders Grotesk */
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    }
+
+    .container {
+        /* eraneos.com uses a very wide container, often ~1400px or more, and specific padding */
+        max-width: 1440px; /* Wider container */
+        margin: 0 auto;
+        padding: 0 40px; /* More padding like eraneos.com */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        font-size: 1.8rem; /* eraneos.com logo text is not overly large */
+        font-weight: 700; /* Bold */
+        color: #000000; /* Black logo text */
+        text-decoration: none;
+        letter-spacing: -0.5px;
+    }
+
+    .main-navigation {
+        /* This positions the nav more centrally if there's space */
+        margin-left: auto; /* Pushes nav away from logo if actions are also pushed right */
+        margin-right: 30px; /* Space before header actions */
+    }
+
+    .main-navigation ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
+    .main-navigation li {
+        margin-left: 32px; /* Spacing from eraneos.com inspection */
+    }
+
+    .main-navigation a {
+        text-decoration: none;
+        color: #212529; /* Darker grey, almost black, for text */
+        font-weight: 500; /* Or 400 depending on how "Founders Grotesk Regular" renders */
+        font-size: 0.9rem; /* eraneos.com nav links are not very large */
+        transition: color 0.2s ease-in-out;
+        text-transform: capitalize; /* 'Our impact' vs 'Our Impact' etc. Eraneos uses sentence case mostly */
+    }
+
+    .main-navigation a:hover {
+        color: #ff5f00; /* Eraneos Orange on hover */
+    }
+
+    .header-actions {
+        display: flex;
+        align-items: center;
+    }
+
+    .contact-button {
+        background-color: #000000; /* Black button */
+        color: #ffffff !important;
+        padding: 10px 20px; /* Adjusted padding based on eraneos.com */
+        text-decoration: none;
+        border-radius: 4px; /* Slightly rounded */
+        font-weight: 500;
+        font-size: 0.9rem;
+        margin-right: 25px; /* Spacing */
+        transition: background-color 0.3s ease, color 0.3s ease;
+        line-height: 1.5; /* Ensure text is vertically centered well */
+    }
+
+    .contact-button:hover {
+        background-color: #333333;
+        color: #ffffff !important;
+        text-decoration: none;
+    }
+
+    .language-selector {
+        margin-right: 25px; /* Spacing */
+        color: #212529; /* Dark text */
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+     .language-selector span {
+        padding: 5px 0; /* Padding only top/bottom if no border */
+     }
+     /* For a chevron:
+     .language-selector::after {
+        content: '⌄'; // or an SVG icon
+        margin-left: 5px;
+     }
+     */
+
+    .search-icon {
+        color: #212529; /* Dark icon */
+        cursor: pointer;
+    }
+    .search-icon svg {
+        display: block;
+    }
+
+    /* Responsive Adjustments - eraneos.com has a sophisticated mobile menu */
+    @media (max-width: 1024px) { /* Breakpoint when nav might get too crowded */
+        .main-navigation {
+            display: none;
+        }
+        .language-selector {
+             /* display: none; Keep it for now, eraneos shows it */
+        }
+    }
+     @media (max-width: 768px) {
+        .contact-button {
+            /* display: none; Eraneos still shows it on smaller tablets */
+        }
+        .container {
+             padding: 0 20px; /* Less padding on smaller screens */
+        }
+        .logo {
+            font-size: 1.6rem;
+        }
+        .language-selector, .search-icon {
+            /* Optionally hide on very small screens if header is too cluttered */
+        }
+     }
+     @media (max-width: 480px) { /* Mobile phones */
+        .contact-button { display: none; }
+        .language-selector { display: none; }
+        .header-actions { margin-left: auto; } /* Push search icon to far right if others hidden */
+     }
+</style>

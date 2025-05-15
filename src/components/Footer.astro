@@ -1,0 +1,174 @@
+---
+// src/components/Footer.astro
+const currentYear = new Date().getFullYear();
+
+const footerNavSections = [
+    {
+        title: "Expertise",
+        links: [
+            { href: "https://www.eraneos.com/en/expertise/data-ai/", text: "Data & AI" },
+            { href: "https://www.eraneos.com/en/expertise/cyber-security/", text: "Cyber Security" },
+            { href: "https://www.eraneos.com/en/expertise/digital-business-innovation/", text: "Digital Business & Innovation" },
+            // Add more as needed
+        ]
+    },
+    {
+        title: "Quick Links",
+        links: [
+            { href: "https://www.eraneos.com/en/about-us/", text: "About Us" },
+            { href: "https://www.eraneos.com/en/career/", text: "Career" },
+            { href: "https://www.eraneos.com/en/contact/", text: "Contact" },
+            // Add more as needed
+        ]
+    },
+    // You can add more sections like "Locations" if desired
+];
+
+const socialLinks = [
+    { href: "https://www.linkedin.com/company/eraneos-group/", text: "LinkedIn", icon: "LI" }, // Placeholder icon
+    { href: "https://www.xing.com/pages/eraneosgroup", text: "Xing", icon: "XI" }, // Placeholder icon
+    // Add more social links if needed
+];
+---
+<footer class="site-footer">
+    <div class="container footer-main">
+        <div class="footer-logo-tagline">
+            <div class="logo">Eraneos</div>
+            <p class="tagline">Shaping a digital tomorrow you can trust.</p>
+        </div>
+        <div class="footer-nav-sections">
+            {footerNavSections.map(section => (
+                <div class="nav-section">
+                    <h4>{section.title}</h4>
+                    <ul>
+                        {section.links.map(link => (
+                            <li><a href={link.href} target="_blank" rel="noopener noreferrer">{link.text}</a></li>
+                        ))}
+                    </ul>
+                </div>
+            ))}
+        </div>
+    </div>
+    <div class="container footer-bottom">
+        <div class="copyright">
+            © {currentYear} Eraneos Group. All rights reserved.
+        </div>
+        <div class="legal-links">
+            <a href="https://www.eraneos.com/en/imprint/" target="_blank" rel="noopener noreferrer">Imprint</a>
+            <a href="https://www.eraneos.com/en/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+            <a href="https://www.eraneos.com/en/terms-of-use/" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+        </div>
+        <div class="social-links">
+            {socialLinks.map(social => (
+                <a href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.text}>
+                    {social.icon} {/* Replace with actual SVG icons later */}
+                </a>
+            ))}
+        </div>
+    </div>
+</footer>
+
+<style>
+    /* Inherits base font from BaseLayout */
+    .site-footer {
+        background-color: #1a1a1a;
+        color: #cccccc;
+        padding: 3rem 0 1.5rem 0; /* Adjusted padding */
+        font-size: 0.875rem; /* Slightly smaller base footer font */
+        line-height: 1.6;
+    }
+
+    .container { /* Local container for footer */
+        max-width: 1440px; /* Match header container */
+        margin: 0 auto;
+        padding: 0 40px; /* Match header container padding */
+    }
+
+    .footer-main {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 2rem;
+        padding-bottom: 2.5rem; /* Increased padding */
+        border-bottom: 1px solid #444444;
+        margin-bottom: 2rem; /* Increased margin */
+    }
+
+    .footer-logo-tagline {
+        flex-basis: 280px;
+        margin-right: 2rem;
+    }
+    .footer-logo-tagline .logo {
+        font-size: 1.8rem; /* Same as header logo */
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 0.75rem; /* More space */
+        text-transform: lowercase; /* 'eraneos' */
+    }
+    .tagline {
+        font-size: 0.9rem; /* Slightly larger */
+        color: #aaaaaa;
+        line-height: 1.5;
+    }
+
+    .footer-nav-sections {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2.5rem; /* More gap */
+        flex-grow: 1;
+    }
+    .nav-section { min-width: 160px; }
+    .nav-section h4 {
+        color: #ffffff;
+        font-size: 1rem;
+        margin-bottom: 1rem; /* More space */
+        font-weight: 500; /* Medium weight */
+    }
+    .nav-section ul { list-style: none; padding: 0; margin: 0; }
+    .nav-section li { margin-bottom: 0.6rem; /* More space */ }
+    .nav-section a {
+        color: #cccccc;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+    .nav-section a:hover {
+        color: #ff5f00; /* Eraneos Orange on hover */
+        text-decoration: none; /* No underline on hover, just color change */
+    }
+
+    .footer-bottom {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        font-size: 0.8rem; /* Smaller for legal text */
+        color: #aaaaaa;
+    }
+    .copyright { flex-grow: 1; text-align: left; }
+    .legal-links { text-align: right; } /* Push legal links to the right */
+    .legal-links a, .social-links a {
+        color: #aaaaaa;
+        text-decoration: none;
+        margin-left: 18px; /* More spacing */
+        transition: color 0.2s ease;
+    }
+    .legal-links a:hover, .social-links a:hover {
+        color: #ff5f00; /* Eraneos Orange on hover */
+        text-decoration: none;
+    }
+    .social-links { /* Placeholder */ display: flex; align-items: center; }
+    .social-links a { font-size: 1.1rem; /* If icons are text */ }
+
+    @media (max-width: 992px) { /* Adjusted breakpoint */
+        .footer-main { flex-direction: column; }
+        .footer-logo-tagline { margin-right: 0; margin-bottom: 2.5rem; }
+    }
+    @media (max-width: 768px) {
+        .footer-bottom { flex-direction: column; align-items: center; text-align: center; }
+        .copyright { margin-bottom: 1rem; text-align: center; }
+        .legal-links { text-align: center; }
+        .legal-links a { margin: 0 10px 10px 10px; display: inline-block; }
+        .social-links { margin-top: 0.5rem; justify-content: center; }
+    }
+</style>

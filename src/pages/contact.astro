@@ -1,0 +1,213 @@
+---
+// src/pages/contact.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "Contact Eraneos UK - Let's Connect";
+const pageDescription = "Get in touch with the Eraneos UK team. Fill out our contact form or email us directly. We look forward to discussing your digital transformation needs.";
+---
+<BaseLayout title={pageTitle} description={pageDescription}>
+    <div class="container contact-page-layout">
+        <h1>Contact Eraneos UK</h1>
+        <p class="intro">
+            We are keen to hear about your challenges and explore how Eraneos UK can partner
+            with you. Please use the form below to send us a message, or contact us via email.
+        </p>
+
+        <div class="contact-content-wrapper">
+            <div class="contact-form-section">
+                <h2>Send us a Message</h2>
+                <form id="contactForm" class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company (Optional)</label>
+                        <input type="text" id="company" name="company" />
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" name="message" rows="6" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="submit-button">Send Message</button>
+                    </div>
+                </form>
+                <p class="form-notice">
+                    <em>Please note: This is a demonstration form. Submissions are not currently processed.
+                    Please use the email address provided for enquiries.</em>
+                </p>
+            </div>
+
+            <div class="contact-details-section">
+                <h2>Email Us</h2>
+                <p>
+                    For direct enquiries, please email us at:
+                    <a href="mailto:adriana.langdon@eraneos.com" class="email-link">info@eraneos.com</a>
+                </p>
+                <p>
+                    Your message will be directed to our UK team. We endeavour to respond
+                    to all queries promptly.
+                </p>
+
+                <h2>Global Offices</h2>
+                <p>
+                    Eraneos has offices across Europe and Asia. For information on our
+                    other locations, please visit the
+                    <a href="https://www.eraneos.com/en/contact/" target="_blank" rel="noopener noreferrer">Eraneos Group Contact Page</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</BaseLayout>
+
+<script>
+// Basic script to prevent actual form submission for this demo form
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contactForm');
+    if (form) {
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default submission
+            alert('Thank you for your message! (This is a demo - your message has not been sent). Please use the email provided for actual contact.');
+            // Optionally, you could clear the form here:
+            // form.reset();
+        });
+    }
+});
+</script>
+
+<style>
+    .container.contact-page-layout {
+        max-width: 960px; /* Wider for two columns if needed, or single if stacked */
+        margin: 2rem auto 4rem auto;
+        padding: 1rem;
+        line-height: 1.7;
+    }
+
+    .contact-page-layout h1 {
+        font-size: 2.2rem;
+        color: #1a2b48;
+        margin-bottom: 1rem;
+        text-align: center;
+    }
+
+    .contact-page-layout p.intro {
+        font-size: 1.1rem;
+        color: #555;
+        margin-bottom: 2.5rem;
+        text-align: center;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .contact-content-wrapper {
+        display: flex;
+        flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        gap: 3rem; /* Space between form and details section */
+    }
+
+    .contact-form-section {
+        flex: 2; /* Form takes more space */
+        min-width: 300px; /* Minimum width before wrapping */
+    }
+
+    .contact-details-section {
+        flex: 1;
+        min-width: 280px;
+        background-color: #f8f9fa; /* Light background for details section */
+        padding: 1.5rem;
+        border-radius: 8px;
+    }
+
+    .contact-page-layout h2 {
+        font-size: 1.6rem;
+        color: #1a2b48;
+        margin-bottom: 1.5rem;
+    }
+
+    .contact-form .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .contact-form label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #333;
+    }
+
+    .contact-form input[type="text"],
+    .contact-form input[type="email"],
+    .contact-form textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+        box-sizing: border-box; /* Important for width and padding */
+    }
+    .contact-form input[type="text"]:focus,
+    .contact-form input[type="email"]:focus,
+    .contact-form textarea:focus {
+        border-color: #005bbb;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(0, 91, 187, 0.2);
+    }
+
+
+    .contact-form .submit-button {
+        background-color: #005bbb; /* Eraneos blue */
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .contact-form .submit-button:hover {
+        background-color: #0033a0; /* Darker blue */
+    }
+
+    .form-notice {
+        font-size: 0.85rem;
+        color: #777;
+        margin-top: 1rem;
+    }
+
+    .email-link {
+        font-weight: 500;
+        color: #005bbb;
+        text-decoration: underline;
+    }
+    .email-link:hover {
+        color: #0033a0;
+    }
+
+    .contact-details-section p {
+        margin-bottom: 1rem;
+    }
+    .contact-details-section a {
+        color: #005bbb;
+    }
+    .contact-details-section a:hover {
+        color: #0033a0;
+    }
+
+    /* Responsive adjustments for contact page */
+    @media (max-width: 768px) {
+        .contact-content-wrapper {
+            flex-direction: column;
+        }
+        .contact-form-section, .contact-details-section {
+            flex-basis: auto; /* Reset flex-basis when stacked */
+        }
+    }
+</style>

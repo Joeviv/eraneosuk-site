@@ -1,0 +1,54 @@
+---
+// src/pages/services.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const pageTitle = "Our Services in the UK - Eraneos UK";
+const pageDescription = "Discover the range of digital transformation and consulting services offered by Eraneos UK, tailored to the British market.";
+---
+<BaseLayout title={pageTitle} description={pageDescription}>
+    <div class="container page-content">
+        <h1>Our UK Services</h1>
+        <p>
+            Welcome to the Eraneos UK services page. We are currently developing tailored content
+            to showcase our specific offerings for the British market.
+        </p>
+        <p>
+            Eraneos provides comprehensive consulting services across various domains including:
+        </p>
+        <ul>
+            <li>Data & Artificial Intelligence</li>
+            <li>Cyber Security & Information Security</li>
+            <li>Digital Business & Innovation</li>
+            <li>Organisational Development & Change Management</li>
+            <li>Technology & Platform Advisory</li>
+        </ul>
+        <p>
+            Please check back soon for detailed information on how we can help your UK-based
+            organisation achieve its digital ambitions. In the meantime, you can explore our global
+            <a href="https://www.eraneos.com/en/expertise/" target="_blank" rel="noopener noreferrer">Expertise</a> page.
+        </p>
+    </div>
+</BaseLayout>
+
+<style>
+    .container.page-content {
+        max-width: 900px;
+        margin: 2rem auto; /* Add some top/bottom margin */
+        padding: 2rem;
+        min-height: 60vh; /* Ensure some content height */
+    }
+    h1 {
+        margin-bottom: 1.5rem;
+        color: #1a2b48;
+    }
+    p, ul {
+        margin-bottom: 1rem;
+        line-height: 1.7;
+    }
+    ul {
+        padding-left: 20px;
+    }
+    li {
+        margin-bottom: 0.5rem;
+    }
+</style>

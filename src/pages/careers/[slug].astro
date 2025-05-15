@@ -1,0 +1,178 @@
+---
+// src/pages/careers/[slug].astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { allVacanciesData } from '../../data/vacancies.js'; // <--- IMPORT THE DATA
+
+// This function tells Astro which pages to build for this dynamic route
+export async function getStaticPaths() {
+    return allVacanciesData.map(vacancy => ({
+        params: { slug: vacancy.slug },
+        props: { vacancy }
+    }));
+}
+
+// Get the specific vacancy data for this page from Astro.props
+const { vacancy } = Astro.props;
+
+if (!vacancy) {
+    // This case should ideally not be hit if getStaticPaths is correct
+    // but it's good practice for robustness.
+    return Astro.redirect('/careers');
+}
+
+const pageTitle = `${vacancy.title} - Eraneos UK Careers`;
+const pageDescription = `Apply for the ${vacancy.title} position at Eraneos UK in ${vacancy.location}. ${vacancy.description.substring(0, 150).replace(/<[^>]*>?/gm, '')}...`;
+---
+<BaseLayout title={pageTitle} description={pageDescription}>
+    <div class="container vacancy-detail-page">
+        <header class="vacancy-header">
+            <h1>{vacancy.title}</h1>
+            <div class="vacancy-meta">
+                <span><strong>Location:</strong> {vacancy.location}</span>
+                <span><strong>Department:</strong> {vacancy.department}</span>
+                <span><strong>Employment:</strong> {vacancy.employmentType}</span>
+            </div>
+        </header>
+
+        <article class="vacancy-content">
+            <section class="job-description">
+                <h2>Job Description</h2>
+                <Fragment set:html={vacancy.description} />
+            </section>
+
+            <section class="responsibilities">
+                <h2>Key Responsibilities</h2>
+                <ul>
+                    {vacancy.responsibilities.map(item => <li>{item}</li>)}
+                </ul>
+            </section>
+
+            <section class="qualifications">
+                <h2>Your Profile</h2>
+                <ul>
+                    {vacancy.qualifications.map(item => <li>{item}</li>)}
+                </ul>
+            </section>
+
+            <section class="what-we-offer">
+                <h2>What We Offer</h2>
+                <ul>
+                    {vacancy.whatWeOffer.map(item => <li>{item}</li>)}
+                </ul>
+            </section>
+
+            <section class="apply-now">
+                <h2>Interested?</h2>
+                <p>{vacancy.contactInfo}</p>
+                <a href="#" class="apply-button">Apply Now (Placeholder)</a>
+            </section>
+        </article>
+
+         <div class="back-to-careers">
+            <a href="/careers">← Back to All Vacancies</a>
+        </div>
+    </div>
+</BaseLayout>
+
+<style>
+    .container.vacancy-detail-page {
+        max-width: 860px;
+        margin: 2rem auto 4rem auto;
+        padding: 1rem;
+        background-color: #fff;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    .vacancy-header {
+        padding-bottom: 1.5rem;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .vacancy-header h1 {
+        font-size: 2.2rem;
+        color: #1a1a1a; /* Dark grey/black */
+        margin-bottom: 0.75rem;
+        line-height: 1.3;
+        font-weight: 600;
+    }
+
+    .vacancy-meta {
+        font-size: 0.95rem;
+        color: #555;
+    }
+
+    .vacancy-meta span {
+        margin-right: 1.5rem;
+        display: inline-block;
+        margin-bottom: 0.3rem;
+    }
+    .vacancy-meta span strong {
+        color: #333;
+    }
+
+    .vacancy-content section {
+        margin-bottom: 2.5rem;
+    }
+
+    .vacancy-content h2 {
+        font-size: 1.6rem;
+        color: #1a1a1a; /* Dark grey/black */
+        margin-bottom: 1rem;
+        padding-bottom: 0.3rem;
+        border-bottom: 1px dotted #ccc;
+        font-weight: 600;
+    }
+
+    .vacancy-content p, .vacancy-content ul {
+        font-size: 1rem;
+        line-height: 1.7;
+        color: #333;
+        margin-bottom: 1rem;
+    }
+    .job-description p {
+        margin-bottom: 1em;
+    }
+
+    .vacancy-content ul {
+        list-style: disc;
+        padding-left: 25px;
+    }
+
+    .vacancy-content li {
+        margin-bottom: 0.5rem;
+    }
+
+    .apply-button {
+        display: inline-block;
+        background-color: #ff5f00; /* Eraneos Orange */
+        color: white !important;
+        padding: 0.9rem 2rem; /* Consistent with hero button */
+        border-radius: 25px; /* Pill shape */
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        margin-top: 0.5rem;
+    }
+
+    .apply-button:hover {
+        background-color: #e05300; /* Darker Orange */
+        text-decoration: none;
+        transform: translateY(-2px);
+    }
+
+    .back-to-careers {
+        margin-top: 3rem;
+        text-align: center;
+    }
+    .back-to-careers a {
+        color: #1a1a1a; /* Dark grey/black link */
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .back-to-careers a:hover {
+        color: #ff5f00; /* Eraneos Orange on hover */
+        text-decoration: underline;
+    }
+</style>
