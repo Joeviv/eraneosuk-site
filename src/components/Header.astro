@@ -17,9 +17,7 @@ const logoPath = "/images/logo/eraneos_white.svg";
         <a href="/" class="logo">
             <img src={logoPath} alt="Eraneos Logo" />
         </a>
-
-        {/* Desktop Navigation & Actions (will be hidden on mobile) */}
-        <div class="header-desktop-content">
+        <div class="header-desktop-content"> {/* Renamed for clarity from header-right-content-desktop */}
             <nav class="main-navigation-desktop" aria-label="Main desktop navigation">
                 <ul class="navigation-menu-desktop">
                     {navLinks.map(link => (
@@ -37,8 +35,6 @@ const logoPath = "/images/logo/eraneos_white.svg";
                 <a href={contactUsLink.href} class="contact-button">{contactUsLink.text}</a>
             </div>
         </div>
-
-        {/* Mobile Menu Toggle (Hamburger Icon from your example) */}
         <button class="menu-toggle" aria-expanded="false" aria-controls="navigation-menu-mobile">
             <span class="sr-only">Open menu</span>
             <span class="hamburger-icon">
@@ -50,8 +46,6 @@ const logoPath = "/images/logo/eraneos_white.svg";
     </div>
 </header>
 
-{/* Mobile Navigation Panel (Structure from your example) */}
-{/* Placed outside <header> for easier fixed positioning / stacking context */}
 <nav class="mobile-nav-panel-wrapper" aria-label="Main mobile navigation">
     <ul id="navigation-menu-mobile" class="navigation-menu-mobile">
         {navLinks.map(link => (
@@ -63,7 +57,7 @@ const logoPath = "/images/logo/eraneos_white.svg";
                 )}
             </li>
         ))}
-        <li><hr class="mobile-nav-divider" /></li> {/* Optional Divider */}
+        <li><hr class="mobile-nav-divider" /></li>
         <li>
             <a href={contactUsLink.href} class="nav-link-mobile contact-button-mobile">
                 {contactUsLink.text}
@@ -82,10 +76,9 @@ const logoPath = "/images/logo/eraneos_white.svg";
       const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true' || false;
       menuToggle.setAttribute('aria-expanded', String(!isExpanded));
       navMenuMobile.classList.toggle('is-open');
-      body.classList.toggle('no-scroll-mobile-menu', !isExpanded); // Toggle no-scroll on body
+      body.classList.toggle('no-scroll-mobile-menu', !isExpanded);
     });
 
-    // Close menu when a link inside it is clicked
     const mobileLinks = navMenuMobile.querySelectorAll('a.nav-link-mobile');
     mobileLinks.forEach(link => {
         link.addEventListener('click', () => {
@@ -100,33 +93,23 @@ const logoPath = "/images/logo/eraneos_white.svg";
 </script>
 
 <style>
-    /* --- BASE HEADER STYLES (STICKY, DARK THEME) --- */
     .site-header {
-        background-color: #111111;
-        padding: 20px 0;
-        position: sticky; top: 0;
-        width: 100%;
-        z-index: 1001; /* Above page content, potentially below mobile panel overlay elements if panel itself isn't highest */
+        background-color: #111111; padding: 20px 0; position: sticky; top: 0;
+        width: 100%; z-index: 1001;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
     .container {
         max-width: 1320px; margin: 0 auto; padding: 0 20px;
         display: flex; justify-content: space-between; align-items: center;
     }
-    .logo img { height: 32px; display: block; }
+    .logo img {
+        height: 44px; /* INCREASED LOGO HEIGHT */
+        display: block;
+    }
 
-    /* --- DESKTOP NAVIGATION STYLES --- */
-    .header-desktop-content { /* Wrapper for desktop nav and actions */
-        display: flex;
-        align-items: center;
-        margin-left: auto; /* Push this group to the right, leaving space for logo */
-    }
-    .main-navigation-desktop {
-        margin-right: 35px; /* Space between nav links and contact button */
-    }
-    .navigation-menu-desktop {
-        display: flex; list-style: none; padding: 0; margin: 0;
-    }
+    .header-desktop-content { display: flex; align-items: center; margin-left: auto; }
+    .main-navigation-desktop { margin-right: 35px; }
+    .navigation-menu-desktop { display: flex; list-style: none; padding: 0; margin: 0; }
     .navigation-menu-desktop li { margin-left: 28px; }
     .navigation-menu-desktop li:first-child { margin-left: 0; }
     .nav-link-desktop {
@@ -146,14 +129,9 @@ const logoPath = "/images/logo/eraneos_white.svg";
         background-color: rgba(255, 255, 255, 0.15); border-color: #f0f0f0;
     }
 
-    /* --- MOBILE MENU TOGGLE & ICON (FROM YOUR EXAMPLE) --- */
     .menu-toggle {
-        display: none; /* Hidden on desktop by default */
-        background: none; border: none; color: white; cursor: pointer;
-        padding: 0.5rem; /* From your example */
-        z-index: 10002; /* Must be on top of everything, including open panel */
-        position: relative; /* For hamburger line positioning */
-        /* margin-left: auto; /* Ensures it's on the right when desktop content is hidden */
+        display: none; background: none; border: none; color: white; cursor: pointer;
+        padding: 0.5rem; z-index: 10002; position: relative;
     }
     .hamburger-icon { width: 24px; height: 18px; position: relative; display: inline-block; }
     .hamburger-icon .line {
@@ -161,9 +139,7 @@ const logoPath = "/images/logo/eraneos_white.svg";
         background: #fff; border-radius: 3px; opacity: 1; left: 0;
         transform: rotate(0deg); transition: .25s ease-in-out;
     }
-    .line1 { top: 0px; }
-    .line2 { top: 7px; }
-    .line3 { top: 14px; }
+    .line1 { top: 0px; } .line2 { top: 7px; } .line3 { top: 14px; }
     .menu-toggle[aria-expanded="true"] .line1 { top: 7px; transform: rotate(135deg); }
     .menu-toggle[aria-expanded="true"] .line2 { opacity: 0; left: -24px; }
     .menu-toggle[aria-expanded="true"] .line3 { top: 7px; transform: rotate(-135deg); }
@@ -172,101 +148,53 @@ const logoPath = "/images/logo/eraneos_white.svg";
         overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
     }
 
-    /* --- MOBILE NAVIGATION PANEL (FROM YOUR EXAMPLE, ADAPTED FOR ERANEOS) --- */
-    .mobile-nav-panel-wrapper { /* This wrapper might not be strictly needed if ul is styled directly */
-        /* No styles needed on wrapper if #navigation-menu-mobile handles all positioning */
-    }
+    .mobile-nav-panel-wrapper {} /* No specific style needed for wrapper */
     .navigation-menu-mobile {
         display: flex; flex-direction: column; align-items: center;
         list-style: none; padding: 0; margin: 0;
-        position: fixed;
-        top: 0;
-        left: 0; /* Start from left for slide-in */
-        width: 85%; /* Panel width */
-        max-width: 320px; /* Max panel width */
-        height: 100vh; /* Full viewport height */
-        background-color: #111111; /* Dark background, same as header */
-        z-index: 10000; /* Below toggle button, above site header (when open) */
-        opacity: 0;
-        visibility: hidden;
-        transform: translateX(-100%); /* Start off-screen to the left */
+        position: fixed; top: 0; left: 0;
+        width: 85%; max-width: 320px; height: 100vh;
+        background-color: #111111; z-index: 10000;
+        opacity: 0; visibility: hidden; transform: translateX(-100%);
         transition: opacity 0.3s ease, visibility 0s linear 0.3s, transform 0.3s ease-in-out;
-        padding-top: 80px; /* Space for the sticky site header to show above */
-        box-shadow: 3px 0px 15px rgba(0,0,0,0.2); /* Shadow on the right edge */
-        overflow-y: auto; /* Allow scrolling if many links */
+        padding-top: 80px; box-shadow: 3px 0px 15px rgba(0,0,0,0.2); overflow-y: auto;
     }
     .navigation-menu-mobile.is-open {
-        opacity: 1;
-        visibility: visible;
-        transform: translateX(0%); /* Slides in from the left */
-        transition-delay: 0s, 0s, 0s; /* Ensure visibility transition is immediate */
+        opacity: 1; visibility: visible; transform: translateX(0%);
+        transition-delay: 0s, 0s, 0s;
     }
-
-    .navigation-menu-mobile li {
-        margin: 0;
-        width: 100%; /* Links take full width of panel */
-        text-align: left;
-    }
+    .navigation-menu-mobile li { margin: 0; width: 100%; text-align: left; }
     .nav-link-mobile {
-        display: block;
-        padding: 0.9rem 1.5rem; /* Padding for tap targets */
-        color: #ffffff;
-        text-decoration: none;
-        font-size: 1.1rem; /* Mobile link font size */
-        font-weight: 500;
-        border-bottom: 1px solid #2b2b2b; /* Subtle separator */
+        display: block; padding: 0.9rem 1.5rem; color: #ffffff; text-decoration: none;
+        font-size: 1.1rem; font-weight: 500; border-bottom: 1px solid #2b2b2b;
         transition: background-color 0.2s ease, color 0.2s ease;
     }
-    .navigation-menu-mobile li:first-child .nav-link-mobile {
-        /* Optional: border-top: 1px solid #2b2b2b; */
-    }
-    .navigation-menu-mobile li:last-child .nav-link-mobile {
-        /* border-bottom: none; /* No border on the very last item */
-    }
+    .navigation-menu-mobile li:first-child .nav-link-mobile {}
+    .navigation-menu-mobile li:last-child .nav-link-mobile {}
     .nav-link-mobile:hover, .nav-link-mobile:focus {
-        background-color: #222222; /* Darker highlight on hover */
-        color: #ff5f00; /* Eraneos orange for hover text */
+        background-color: #222222; color: #ff5f00;
     }
-    .mobile-nav-divider {
-        border: none; border-top: 1px solid #444444; margin: 0.5rem 1.5rem; /* Divider within list */
-    }
+    .mobile-nav-divider { border: none; border-top: 1px solid #444444; margin: 0.5rem 1.5rem; }
     .contact-button-mobile {
-        /* Special styling for contact button in mobile menu */
-        margin: 1rem 1.5rem 1.5rem 1.5rem; /* Add some margin around it */
-        padding: 0.75rem 1rem !important; /* Ensure padding */
-        border: 1px solid #ffffff;
-        border-radius: 20px;
-        display: block; /* Make it block for centering and full-width feel */
-        text-align: center;
-        font-weight: 500;
-        color: #ffffff !important;
+        margin: 1rem 1.5rem 1.5rem 1.5rem; padding: 0.75rem 1rem !important;
+        border: 1px solid #ffffff; border-radius: 20px; display: block; text-align: center;
+        font-weight: 500; color: #ffffff !important;
     }
     .contact-button-mobile:hover {
-        background-color: rgba(255, 255, 255, 0.1) !important;
-        color: #ffffff !important; /* Keep text white */
+        background-color: rgba(255, 255, 255, 0.1) !important; color: #ffffff !important;
     }
 
-    /* --- RESPONSIVE BREAKPOINTS --- */
-    @media (max-width: 1024px) { /* Breakpoint where mobile menu activates */
-        .header-desktop-content {
-            display: none; /* Hide desktop navigation and contact button */
-        }
-        .menu-toggle {
-            display: block; /* Show hamburger toggle */
-            /* margin-left: auto; /* If not already pushed by justify-content on container */
-        }
+    @media (max-width: 1024px) {
+        .header-desktop-content { display: none; }
+        .menu-toggle { display: block; }
     }
-
-    @media (max-width: 768px) { /* Further adjustments for smaller screens */
+    @media (max-width: 768px) {
         .site-header { padding: 15px 0; }
         .container { padding: 0 15px; }
-        .logo img { height: 28px; }
-        .navigation-menu-mobile { padding-top: 70px; /* Adjust for smaller header height */ }
+        .logo img { height: 36px; /* Keep logo a bit larger on mobile too */ }
+        .navigation-menu-mobile { padding-top: 70px; /* Adjusted for new mobile header height */ }
         .nav-link-mobile { font-size: 1rem; padding: 0.8rem 1.2rem; }
         .contact-button-mobile { margin: 0.8rem 1.2rem 1.2rem 1.2rem; }
     }
-
-    .no-scroll-mobile-menu {
-        overflow: hidden; /* Prevent body scroll when mobile menu is open */
-    }
+    .no-scroll-mobile-menu { overflow: hidden; }
 </style>

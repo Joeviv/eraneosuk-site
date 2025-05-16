@@ -20,6 +20,60 @@ const pageDescription = "As a European challenger, Eraneos UK empowers organizat
         </div>
     </section>
 
+    {/* "SERVICES WE PROVIDE" SECTION - REVISED FOR CARD LAYOUT */}
+    <section class="services-provide-section">
+        <div class="services-provide-intro container-eraneos">
+            <h2>Services we provide</h2>
+            <p>
+                The unique combination of competencies in consulting, technology and digital
+                engineering allows Eraneos to support its customers comprehensively. We provide
+                services from strategy to implementation to help customers achieve their goals.
+            </p>
+        </div>
+        <div class="services-grid-container container-eraneos">
+            <div class="service-card">
+                <img src="/images/home/organisational.jpg" alt="Team working on organisational transformation" class="service-card-image"/>
+                <div class="service-card-text-content">
+                    <h3 class="service-card-title">Organisational Excellence & Transformation</h3>
+                    <p class="service-card-description">
+                        Shape and transform your organization to be smarter and more resilient by building Target
+                        Operating Models, embedding working based on lean & agile and making the most of talent.
+                    </p>
+                    <a href="/services/organisational-excellence" class="service-card-link">
+                        <span>→</span>
+                    </a>
+                </div>
+            </div>
+            <div class="service-card">
+                <img src="/images/home/data_ai.jpg" alt="Abstract representation of Data and AI" class="service-card-image"/>
+                <div class="service-card-text-content">
+                    <h3 class="service-card-title">Data & AI</h3>
+                    <p class="service-card-description">
+                        Create value for your business by leveraging AI, Machine Learning and Big Data through
+                        innovative business modelling, state-of-the-art analytics, AI solutions and fully scaled operations.
+                    </p>
+                    <a href="/services/data-ai" class="service-card-link">
+                        <span>→</span>
+                    </a>
+                </div>
+            </div>
+            <div class="service-card">
+                <img src="/images/home/cyber.jpg" alt="Server racks representing cyber security infrastructure" class="service-card-image"/>
+                <div class="service-card-text-content">
+                    <h3 class="service-card-title">Cyber Security</h3>
+                    <p class="service-card-description">
+                        A holistic approach adapted to your industry and organization to help you align cyber security with
+                        strategic business objectives to achieve sustainable results – from strategy to execution.
+                    </p>
+                    <a href="/services/cyber-security" class="service-card-link">
+                        <span>→</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    {/* END "SERVICES WE PROVIDE" SECTION */}
+
     <section class="future-proof-section">
         <div class="container-eraneos">
             <div class="future-proof-content">
@@ -40,7 +94,8 @@ const pageDescription = "As a European challenger, Eraneos UK empowers organizat
                 </p>
             </div>
             <div class="future-proof-image">
-                <img src="https://via.placeholder.com/500x600.png/e0e0e0/969696?text=Placeholder+Image" alt="Team discussing solutions" />
+                {/* Corrected path for future_proofing.jpg */}
+                <img src="/images/home/future_proofing.jpg" alt="Eraneos team collaborating on future-proof solutions" />
             </div>
         </div>
     </section>
@@ -48,59 +103,33 @@ const pageDescription = "As a European challenger, Eraneos UK empowers organizat
 </BaseLayout>
 
 <style>
-    .container-eraneos {
-        max-width: 1140px;
-        margin: 0 auto;
-        padding: 0 1rem;
-    }
+    .container-eraneos { max-width: 1140px; margin: 0 auto; padding: 0 1rem; }
 
     .hero-section-eraneos {
-        background-color: #101010; /* Dark fallback, slightly different from header if needed */
-        background-image: url('/images/backgrounds/hero_background.jpg'); /* PATH FROM YOUR SCREENSHOT */
-        background-size: cover;
-        background-position: center center;
-        background-repeat: no-repeat;
+        background-color: #101010;
+        background-image: url('/images/backgrounds/hero_background.jpg');
+        background-size: cover; background-position: center center; background-repeat: no-repeat;
         color: #ffffff;
-        /* Header: 20px padding top/bottom + 32px logo = 72px. Let's add a bit more. */
-        padding-top: calc(72px + 50px); /* Header height + extra space above text */
-        padding-bottom: 8rem;          /* Space below text block */
-        padding-left: 1rem;             /* Side padding for content within hero */
-        padding-right: 1rem;
-        text-align: left;
-        position: relative;
-        overflow: hidden;
-        min-height: 70vh; /* Or adjust for desired visual height */
-        display: flex;
-        align-items: center; /* Vertically center the .hero-content-eraneos block */
+        padding-top: calc(84px + 50px);
+        padding-bottom: 10rem; padding-left: 1rem; padding-right: 1rem;
+        text-align: left; position: relative; overflow: hidden;
+        min-height: 75vh; display: flex; align-items: center;
     }
-
     .hero-content-eraneos {
-        max-width: 620px;
-        position: relative;
-        z-index: 1;
-        /* Align with .container padding in Header.astro (1320px wide, 20px padding) */
+        max-width: 620px; position: relative; z-index: 1;
         margin-left: calc((100% - 1320px)/2 + 20px);
     }
-    @media (max-width: 1360px) { /* When header container is full width */
-        .hero-content-eraneos {
-            margin-left: 20px;
-            margin-right: 20px;
-        }
+    @media (max-width: 1360px) {
+        .hero-content-eraneos { margin-left: 20px; margin-right: 20px; }
     }
-     @media (max-width: 768px) {
+    @media (max-width: 768px) {
         .hero-section-eraneos {
             text-align: center;
-            /* Header on mobile: 15px padding top/bottom + 28px logo = ~58px */
-            padding-top: calc(58px + 40px); /* Header height + extra space */
-            padding-bottom: 6rem;
-            min-height: 65vh;
+            padding-top: calc(66px + 40px);
+            padding-bottom: 6rem; min-height: 70vh;
         }
-        .hero-content-eraneos {
-            margin-left: auto;
-            margin-right: auto;
-        }
+        .hero-content-eraneos { margin-left: auto; margin-right: auto; }
     }
-
     .hero-content-eraneos h1 {
         font-size: 3.8rem; font-weight: 600; line-height: 1.1;
         margin-bottom: 1.5rem; color: #ffffff;
@@ -116,6 +145,98 @@ const pageDescription = "As a European challenger, Eraneos UK empowers organizat
     }
     .cta-button-eraneos:hover { background-color: #e05300; transform: translateY(-2px); text-decoration: none; }
 
+
+    /* --- SERVICES WE PROVIDE SECTION - CARD LAYOUT --- */
+    .services-provide-section {
+        padding: 4rem 0;
+        background-color: #ffffff;
+    }
+    .services-provide-intro {
+        text-align: left;
+        margin-bottom: 3rem;
+        max-width: 700px;
+    }
+    .services-provide-intro h2 {
+        font-size: 2.8rem; font-weight: 600; color: #212529;
+        margin-bottom: 1rem; line-height: 1.2;
+    }
+    .services-provide-intro p {
+        font-size: 1.1rem; color: #555; line-height: 1.7;
+    }
+
+    .services-grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Responsive 1, 2, or 3 columns */
+        gap: 2.5rem; /* Gap between cards */
+    }
+
+    .service-card {
+        background-color: #ffffff;
+        border-radius: 0px; /* No rounded corners on card itself */
+        /* box-shadow: 0 4px 12px rgba(0,0,0,0.08); */ /* Very subtle or no shadow */
+        display: flex;
+        flex-direction: column; /* Image on top, then text content */
+        overflow: hidden;
+        /* transition: transform 0.3s ease; */ /* Optional hover */
+    }
+    /* .service-card:hover { transform: translateY(-5px); } */
+
+    .service-card-image {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+    }
+
+    .service-card-text-content {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    .service-card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #212529;
+        margin: 0 0 0.75rem 0;
+    }
+
+    .service-card-description {
+        font-size: 0.9rem;
+        color: #212529; /* Darker text as per reference */
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+        flex-grow: 1;
+    }
+
+    .service-card-link {
+        display: block;
+        margin-top: auto; /* Pushes link to the very bottom */
+        text-align: left; /* Align arrow to the left */
+    }
+    .service-card-link span { /* The arrow */
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px; height: 36px;
+        border: 1.5px solid #212529; /* Dark border */
+        border-radius: 50%;
+        color: #212529; /* Dark arrow */
+        font-size: 1.3rem;
+        line-height: calc(36px - 3px); /* Adjust for border */
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+    .service-card-link:hover span {
+        background-color: #212529; /* Dark background on hover */
+        color: #ffffff; /* White arrow on hover */
+        border-color: #212529;
+    }
+    .services-provide-section .container-eraneos {
+        max-width: 1140px; margin-left: auto; margin-right: auto;
+    }
+
+
+    /* --- FUTURE PROOF SECTION --- */
     .future-proof-section { padding: 5rem 0; background-color: #ffffff; }
     .future-proof-section .container-eraneos { display: flex; align-items: center; gap: 3.5rem; }
     .future-proof-content { flex: 1; order: 1; }
@@ -129,8 +250,12 @@ const pageDescription = "As a European challenger, Eraneos UK empowers organizat
     .future-proof-image { flex-basis: 45%; max-width: 45%; text-align: right; order: 2; }
     .future-proof-image img { max-width: 100%; height: auto; border-radius: 8px; }
 
+    /* General Responsive Adjustments from before */
     @media (max-width: 992px) {
         .hero-content-eraneos h1 { font-size: 2.8rem; }
+        .services-provide-intro { text-align: center; max-width: none; }
+        .services-provide-intro h2 { font-size: 2.2rem; }
+        /* .services-grid-container will naturally go to 2 then 1 column due to auto-fit */
         .future-proof-section .container-eraneos { flex-direction: column; }
         .future-proof-content, .future-proof-image {
             max-width: 100%; flex-basis: auto; order: 0; text-align: center;
@@ -140,5 +265,11 @@ const pageDescription = "As a European challenger, Eraneos UK empowers organizat
     }
     @media (max-width: 768px) {
         .hero-content-eraneos h1 { font-size: 2.2rem; }
+        .services-grid-container {
+            grid-template-columns: 1fr; /* Explicitly 1 column on smaller mobile */
+        }
+        .service-card-image { height: 200px; }
+        .service-card-title { font-size: 1.15rem; }
+        .service-card-description { font-size: 0.85rem; }
     }
 </style>
