@@ -1,79 +1,67 @@
 // src/data/vacancies.js
 export const allVacanciesData = [
     {
-        slug: "senior-manager-life-science-rd",
-        title: "Senior Manager - Life Science R&D (all genders)",
-        location: "England, UK",
-        department: "Consulting - Life Sciences",
+        slug: "senior-grc-consultant",
+        title: "Senior GRC Consultant",
+        category: "Cyber Security", // Category for grouping
+        department: "Cyber Security Practice", // Specific department
+        location: "UK",
         employmentType: "Full-time",
-        postedDate: "2024-05-10",
+        postedDate: "2024-05-16", // Example date
+        shortDescription: "Provide expert GRC consultancy, helping clients manage cyber risks, navigate regulations, and establish robust governance frameworks.",
         description: `
-            <p>Eraneos UK is seeking an experienced and driven Senior Manager to join our growing Life Sciences practice. In this pivotal role, you will be at the forefront of shaping and delivering transformative consulting projects for leading pharmaceutical, biotech, and medical device companies across the UK.</p>
-            <p>You will leverage your deep understanding of the Life Science R&D landscape, combined with strong project management and client relationship skills, to help our clients navigate complex challenges, optimise their research and development processes, and bring innovative therapies and products to market more effectively.</p>
+            <p>Eraneos UK is seeking a highly skilled and experienced Senior GRC (Governance, Risk, and Compliance) Consultant to join our dynamic Cyber Security team. In this role, you will be instrumental in helping our clients establish and mature their GRC frameworks, navigate complex regulatory landscapes, and manage cyber risks effectively.</p>
+            <p>You will work closely with diverse clients across various industries, providing expert advice, developing tailored solutions, and driving the implementation of best-practice GRC strategies to ensure their information assets are protected and their operations are compliant.</p>
         `,
         responsibilities: [
-            "Lead and manage complex consulting engagements within the Life Science R&D sector, ensuring high-quality deliverables and client satisfaction.",
-            "Develop and maintain strong relationships with key client stakeholders, acting as a trusted advisor.",
-            "Contribute to business development activities, including proposal writing and client presentations.",
-            "Drive thought leadership and innovation within the Eraneos Life Sciences practice.",
-            "Mentor and develop junior team members.",
-            "Stay abreast of industry trends, regulatory changes, and emerging technologies in Life Science R&D."
+            // Governance
+            "Oversee the effectiveness of governance checklists and blueprints to embed robust governance frameworks.",
+            "Drive process change using techniques such as reporting, document analysis, requirements workshops, surveys, business process descriptions, business analysis, and workflow analysis.",
+            "Manage risk mitigation and project requirements to propose enablers to process, people, and technology; re-engineer processes to increase efficiencies where required.",
+            "Review quality control activities, including periodically using maturity assessments where applicable.",
+            // Risk
+            "Lead Cyber Risk assessment activities in collaboration with business stakeholders.",
+            "Take a risk-based approach to identify and treat risks as they relate to technology, business strategy, and objectives.",
+            "Anticipate changes in clients' operational risk profiles, providing insight and reporting on current and likely future security risks.",
+            "Ensure effective risk management for clients' Information Security risks.",
+            "Identify, evaluate, and report on information security risks to support the effective protection of information assets.",
+            "Deliver risk mitigation plans in response to changes in risk profiles driven by internal/external events and lessons learned.",
+            "Engage with internal functions and external partners to support project bids and ensure client compliance with legal, regulatory, and compliance requirements.",
+            "Support Senior Managers in Group and Business Unit Incident and crisis response management.",
+            // Compliance
+            "Enforce regulatory policies, procedures, and controls, including customer due diligence, transaction monitoring, reporting, and liaising with relevant authorities.",
+            "Support the delivery of a GRC model that allows for consistent risk management, reporting, and assurance."
         ],
         qualifications: [
-            "Significant experience in management consulting, specifically within the Life Science / Pharmaceutical R&D domain.",
-            "Proven track record of successfully leading and delivering complex projects.",
-            "Strong understanding of drug discovery, clinical development, regulatory affairs, and/or R&D operations.",
-            "Excellent analytical, problem-solving, and communication skills.",
-            "Ability to work effectively in a team-oriented, collaborative environment.",
-            "Bachelor's or Master's degree in a relevant scientific, engineering, or business discipline. An advanced degree (PhD, MBA) is a plus.",
+            "An undergraduate qualification (Bachelor's degree or equivalent) in computer science, business informatics, engineering/technology, or psychology.",
+            "A postgraduate qualification (Master's/Doctoral degree or equivalent) in computer science, business informatics, engineering/technology, or equivalent is preferred.",
+            "Professional certifications in Information Security from industry-standard security frameworks (e.g., ISACA, BCS, CIPP, ITIL, Crest, ISC2, COMPTIA) and key security vendors (e.g., Microsoft, Qualys, IBM).",
+            "A recognised Information Security, Risk, and Audit qualification/certification (e.g., CRISC, CISA, CISM, ISO27001 Lead Auditor/Implementer).",
+            "Experience in developing behavioural needs analyses that lead to effective programmes of behaviour change in the context of cyber risk.",
+            "Experience in developing and delivering learning material through a range of channels and technologies is preferred.",
+            "Proven ability to conduct security risk assessments for business applications and computer installations.",
+            "Experience performing risk assessments, business impact analyses, and accreditations for major information systems.",
+            "Experience supporting the implementation of information assurance strategies.",
+            "Ability to plan programmes to review activities and ensure compliance.",
             "Eligibility to work in the UK."
         ],
         whatWeOffer: [
-            "A challenging and rewarding role in a dynamic and growing international consultancy.",
-            "Opportunity to work with leading Life Science organisations on impactful projects.",
-            "A collaborative and supportive team environment.",
-            "Competitive salary and benefits package.",
-            "Opportunities for professional development and career progression."
+            "A key role in a growing and influential Cyber Security practice with a focus on GRC.",
+            "The opportunity to work with a variety of clients on challenging and impactful GRC projects.",
+            "A collaborative environment that fosters continuous learning and professional development in the GRC domain.",
+            "Competitive salary, comprehensive benefits package, and performance-based incentives.",
+            "Clear pathways for career advancement within a leading international consultancy."
         ],
-        contactInfo: "To apply, please submit your CV and a cover letter through our online portal or contact our UK recruitment team."
-    },
-    {
-        slug: "senior-data-analyst",
-        title: "Senior Data Analyst (all genders)",
-        location: "England, UK",
-        department: "Data & Analytics Practice",
-        employmentType: "Full-time",
-        postedDate: "2024-05-12",
-        description: `
-            <p>We are looking for a highly skilled Senior Data Analyst to join our expanding Data & Analytics team at Eraneos UK. You will play a crucial role in helping our clients harness the power of data to drive strategic decisions, improve operational efficiency, and unlock new opportunities.</p>
-            <p>This role involves working with diverse datasets, applying advanced analytical techniques, and communicating complex findings in a clear and actionable manner to both technical and non-technical audiences.</p>
-        `,
-        responsibilities: [
-            "Collect, clean, and analyse large and complex datasets from various sources.",
-            "Develop and implement data models, data collection systems, and other strategies that optimize statistical efficiency and data quality.",
-            "Identify, analyse, and interpret trends or patterns in complex data sets.",
-            "Create visualizations and reports to communicate findings to stakeholders.",
-            "Work closely with clients to understand their business requirements and provide data-driven solutions.",
-            "Collaborate with data engineers and data scientists on various projects.",
-            "Stay up-to-date with the latest industry trends and technologies in data analysis."
-        ],
-        qualifications: [
-            "Proven experience as a Data Analyst or in a similar role.",
-            "Strong analytical skills with the ability to collect, organize, analyse, and disseminate significant amounts of information with attention to detail and accuracy.",
-            "Proficiency in SQL and experience with data visualisation tools (e.g., Tableau, Power BI, Qlik).",
-            "Experience with statistical programming languages (e.g., Python, R) is highly desirable.",
-            "Excellent communication and presentation skills.",
-            "Ability to work independently and as part of a team in a fast-paced environment.",
-            "Bachelor's or Master's degree in Statistics, Mathematics, Computer Science, Economics, or a related field.",
-            "Eligibility to work in the UK."
-        ],
-        whatWeOffer: [
-            "An exciting opportunity to work on diverse and challenging data projects for a range of clients.",
-            "A supportive environment that encourages learning and professional growth.",
-            "Access to cutting-edge tools and technologies.",
-            "Competitive remuneration package and benefits.",
-            "A key role in a growing and ambitious Data & Analytics practice."
-        ],
-        contactInfo: "To apply, please submit your CV and a cover letter. Further details will be provided upon application."
+        contactInfo: "To apply, please submit your CV and a detailed cover letter outlining your GRC experience via our online portal.",
+        applicationPolicy: "Please note: We are not engaging with recruitment agencies for this role or any other. Direct applications only. Applicants must have the right to work in the UK, as we do not provide visa sponsorship."
     }
+    // To add a "Data & AI" category later, you would add another job object here:
+    // {
+    //     slug: "data-scientist-example",
+    //     title: "Data Scientist",
+    //     category: "Data & AI",
+    //     department: "Data & AI Practice",
+    //     location: "UK",
+    //     ... other fields ...
+    // }
 ];

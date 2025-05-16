@@ -1,9 +1,8 @@
 ---
 // src/pages/careers/[slug].astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { allVacanciesData } from '../../data/vacancies.js'; // <--- IMPORT THE DATA
+import { allVacanciesData } from '../../data/vacancies.js';
 
-// This function tells Astro which pages to build for this dynamic route
 export async function getStaticPaths() {
     return allVacanciesData.map(vacancy => ({
         params: { slug: vacancy.slug },
@@ -11,17 +10,17 @@ export async function getStaticPaths() {
     }));
 }
 
-// Get the specific vacancy data for this page from Astro.props
 const { vacancy } = Astro.props;
 
 if (!vacancy) {
-    // This case should ideally not be hit if getStaticPaths is correct
-    // but it's good practice for robustness.
     return Astro.redirect('/careers');
 }
 
-const pageTitle = `${vacancy.title} - Eraneos UK Careers`;
-const pageDescription = `Apply for the ${vacancy.title} position at Eraneos UK in ${vacancy.location}. ${vacancy.description.substring(0, 150).replace(/<[^>]*>?/gm, '')}...`;
+const pageTitle = `${vacancy.title} - Apply Now - Eraneos UK Careers`;
+const metaDescriptionText = vacancy.description.replace(/<[^>]*>?/gm, '').substring(0, 160);
+const pageDescription = `Apply for the ${vacancy.title} position at Eraneos UK. ${metaDescriptionText}...`;
+
+const formspreeEndpoint = "https://formspree.io/f/mrbqrnkv"; // YOUR FORM ID
 ---
 <BaseLayout title={pageTitle} description={pageDescription}>
     <div class="container vacancy-detail-page">
@@ -29,8 +28,8 @@ const pageDescription = `Apply for the ${vacancy.title} position at Eraneos UK i
             <h1>{vacancy.title}</h1>
             <div class="vacancy-meta">
                 <span><strong>Location:</strong> {vacancy.location}</span>
-                <span><strong>Department:</strong> {vacancy.department}</span>
-                <span><strong>Employment:</strong> {vacancy.employmentType}</span>
+                {vacancy.department && <span><strong>Department:</strong> {vacancy.department}</span>}
+                {vacancy.employmentType && <span><strong>Employment:</strong> {vacancy.employmentType}</span>}
             </div>
         </header>
 
@@ -40,31 +39,76 @@ const pageDescription = `Apply for the ${vacancy.title} position at Eraneos UK i
                 <Fragment set:html={vacancy.description} />
             </section>
 
-            <section class="responsibilities">
-                <h2>Key Responsibilities</h2>
-                <ul>
-                    {vacancy.responsibilities.map(item => <li>{item}</li>)}
-                </ul>
-            </section>
+            {vacancy.responsibilities && vacancy.responsibilities.length > 0 && (
+                <section class="responsibilities">
+                    <h2>Key Responsibilities</h2>
+                    <ul>
+                        {vacancy.responsibilities.map(item => <li>{item}</li>)}
+                    </ul>
+                </section>
+            )}
 
-            <section class="qualifications">
-                <h2>Your Profile</h2>
-                <ul>
-                    {vacancy.qualifications.map(item => <li>{item}</li>)}
-                </ul>
-            </section>
+            {vacancy.qualifications && vacancy.qualifications.length > 0 && (
+                <section class="qualifications">
+                    <h2>Your Profile</h2>
+                    <ul>
+                        {vacancy.qualifications.map(item => <li>{item}</li>)}
+                    </ul>
+                </section>
+            )}
 
-            <section class="what-we-offer">
-                <h2>What We Offer</h2>
-                <ul>
-                    {vacancy.whatWeOffer.map(item => <li>{item}</li>)}
-                </ul>
-            </section>
+            {vacancy.whatWeOffer && vacancy.whatWeOffer.length > 0 && (
+                <section class="what-we-offer">
+                    <h2>What We Offer</h2>
+                    <ul>
+                        {vacancy.whatWeOffer.map(item => <li>{item}</li>)}
+                    </ul>
+                </section>
+            )}
 
-            <section class="apply-now">
-                <h2>Interested?</h2>
-                <p>{vacancy.contactInfo}</p>
-                <a href="#" class="apply-button">Apply Now (Placeholder)</a>
+            <section class="application-info">
+                <h2>Apply for this position</h2>
+                {vacancy.applicationPolicy && (
+                    <div class="application-policy">
+                        <p>{vacancy.applicationPolicy}</p>
+                    </div>
+                )}
+
+                {/* Application Form - UPDATED */}
+                <form id="jobApplicationForm" class="application-form">
+                    <input type="hidden" name="_subject" value={`Application: ${vacancy.title} - Eraneos UK`} />
+                    <input type="hidden" name="job_title_hidden" value={vacancy.title} /> {/* Renamed to avoid conflict */}
+                    <input type="hidden" name="job_slug" value={vacancy.slug} />
+
+                    {/* VISUALLY DISPLAY THE JOB TITLE */}
+                    <div class="form-group applied-for-job">
+                        <label>Applying for position:</label>
+                        <p class="job-title-display">{vacancy.title}</p>
+                    </div>
+                    {/* END VISUAL DISPLAY */}
+
+                    <div class="form-group">
+                        <label for="name">Full Name <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number (Optional)</label>
+                        <input type="tel" id="phone" name="phone" />
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Cover Letter / Message <span class="required">*</span></label>
+                        <textarea id="message" name="message" rows="6" required></textarea>
+                    </div>
+                    <div class="form-group form-actions">
+                        <button type="submit" class="submit-button">Submit Application</button>
+                    </div>
+                    <div id="formStatusMessage" class="form-status-message" aria-live="polite"></div>
+                </form>
+                {/* End Application Form */}
             </section>
         </article>
 
@@ -74,105 +118,182 @@ const pageDescription = `Apply for the ${vacancy.title} position at Eraneos UK i
     </div>
 </BaseLayout>
 
+<script define:vars={{ formspreeEndpoint }}>
+    const form = document.getElementById('jobApplicationForm');
+    const statusMessage = document.getElementById('formStatusMessage');
+
+    async function handleSubmit(event) {
+        event.preventDefault();
+        const submitButton = form.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        statusMessage.textContent = 'Submitting...';
+        statusMessage.className = 'form-status-message submitting';
+
+        const formData = new FormData(event.target);
+
+        try {
+            const response = await fetch(formspreeEndpoint, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                statusMessage.textContent = 'Thank you! Your application has been submitted successfully.';
+                statusMessage.className = 'form-status-message success';
+                form.reset();
+            } else {
+                const data = await response.json();
+                if (Object.hasOwn(data, 'errors')) {
+                    statusMessage.textContent = data["errors"].map(error => error["message"]).join(", ");
+                } else {
+                    statusMessage.textContent = 'Oops! There was a problem submitting your form. Please try again or contact us directly.';
+                }
+                statusMessage.className = 'form-status-message error';
+            }
+        } catch (error) {
+            statusMessage.textContent = 'Oops! There was a network error. Please check your connection and try again.';
+            statusMessage.className = 'form-status-message error';
+        } finally {
+            submitButton.disabled = false;
+        }
+    }
+
+    if (form) {
+        form.addEventListener('submit', handleSubmit);
+    }
+</script>
+
 <style>
+    /* All previous styles remain the same */
     .container.vacancy-detail-page {
-        max-width: 860px;
-        margin: 2rem auto 4rem auto;
-        padding: 1rem;
-        background-color: #fff;
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        max-width: 860px; margin: 2rem auto 4rem auto; padding: 1rem; background-color: #fff;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     }
+    .vacancy-header { padding-bottom: 1.5rem; margin-bottom: 2rem; border-bottom: 1px solid #e0e0e0; }
+    .vacancy-header h1 { font-size: 2.2rem; color: #1a1a1a; margin-bottom: 0.75rem; line-height: 1.3; font-weight: 600; }
+    .vacancy-meta { font-size: 0.95rem; color: #555; }
+    .vacancy-meta span { margin-right: 1.5rem; display: inline-block; margin-bottom: 0.3rem; }
+    .vacancy-meta span strong { color: #333; }
+    .vacancy-content section { margin-bottom: 2.5rem; }
+    .vacancy-content h2 { font-size: 1.6rem; color: #1a1a1a; margin-bottom: 1rem; padding-bottom: 0.3rem; border-bottom: 1px dotted #ccc; font-weight: 600; }
+    .vacancy-content p, .vacancy-content ul { font-size: 1rem; line-height: 1.7; color: #333; margin-bottom: 1rem; }
+    .job-description p { margin-bottom: 1em; }
+    .vacancy-content ul { list-style: disc; padding-left: 25px; }
+    .vacancy-content li { margin-bottom: 0.5rem; }
 
-    .vacancy-header {
-        padding-bottom: 1.5rem;
-        margin-bottom: 2rem;
-        border-bottom: 1px solid #e0e0e0;
-    }
+    .application-info { margin-bottom: 2.5rem; }
+    .application-info h2 { font-size: 1.6rem; color: #1a1a1a; margin-bottom: 1.5rem; padding-bottom: 0.3rem; border-bottom: 1px dotted #ccc; font-weight: 600; }
+    .application-policy { background-color: #f8f9fa; border-left: 4px solid #ff5f00; padding: 1rem 1.5rem; margin-bottom: 2rem; border-radius: 0 4px 4px 0; }
+    .application-policy p { margin-bottom: 0.5rem; color: #333; font-size: 0.95rem; line-height: 1.6; }
+    .application-policy p:last-child { margin-bottom: 0; }
 
-    .vacancy-header h1 {
-        font-size: 2.2rem;
-        color: #1a1a1a; /* Dark grey/black */
-        margin-bottom: 0.75rem;
-        line-height: 1.3;
-        font-weight: 600;
+    /* --- APPLICATION FORM STYLES --- */
+    .application-form .form-group {
+        margin-bottom: 1.5rem;
     }
-
-    .vacancy-meta {
-        font-size: 0.95rem;
-        color: #555;
-    }
-
-    .vacancy-meta span {
-        margin-right: 1.5rem;
-        display: inline-block;
-        margin-bottom: 0.3rem;
-    }
-    .vacancy-meta span strong {
-        color: #333;
-    }
-
-    .vacancy-content section {
-        margin-bottom: 2.5rem;
-    }
-
-    .vacancy-content h2 {
-        font-size: 1.6rem;
-        color: #1a1a1a; /* Dark grey/black */
-        margin-bottom: 1rem;
-        padding-bottom: 0.3rem;
-        border-bottom: 1px dotted #ccc;
-        font-weight: 600;
-    }
-
-    .vacancy-content p, .vacancy-content ul {
-        font-size: 1rem;
-        line-height: 1.7;
-        color: #333;
-        margin-bottom: 1rem;
-    }
-    .job-description p {
-        margin-bottom: 1em;
-    }
-
-    .vacancy-content ul {
-        list-style: disc;
-        padding-left: 25px;
-    }
-
-    .vacancy-content li {
+    .application-form label {
+        display: block;
         margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #333;
+        font-size: 0.95rem;
+    }
+    .application-form label .required {
+        color: #ff5f00;
+        font-weight: bold;
+        margin-left: 2px;
+    }
+    .application-form input[type="text"],
+    .application-form input[type="email"],
+    .application-form input[type="tel"],
+    .application-form textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+        box-sizing: border-box;
+        font-family: inherit;
+    }
+    .application-form input[type="text"]:focus,
+    .application-form input[type="email"]:focus,
+    .application-form input[type="tel"]:focus,
+    .application-form textarea:focus {
+        border-color: #ff5f00;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(255, 95, 0, 0.2);
+    }
+    .application-form textarea {
+        min-height: 120px;
+        resize: vertical;
     }
 
-    .apply-button {
+    /* STYLES FOR DISPLAYING JOB TITLE IN FORM */
+    .applied-for-job {
+        background-color: #f8f9fa;
+        padding: 1rem;
+        border-radius: 4px;
+        margin-bottom: 1.5rem;
+        border: 1px solid #e9ecef;
+    }
+    .applied-for-job label {
+        font-weight: 500;
+        color: #495057;
+        font-size: 0.9rem;
+        margin-bottom: 0.25rem;
+    }
+    .applied-for-job .job-title-display {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #212529;
+        margin: 0;
+    }
+    /* END STYLES FOR DISPLAYING JOB TITLE */
+
+    .application-form .submit-button {
         display: inline-block;
-        background-color: #ff5f00; /* Eraneos Orange */
+        background-color: #ff5f00;
         color: white !important;
-        padding: 0.9rem 2rem; /* Consistent with hero button */
-        border-radius: 25px; /* Pill shape */
+        padding: 0.9rem 2rem;
+        border: none;
+        border-radius: 25px;
         text-decoration: none;
         font-weight: 600;
         font-size: 1rem;
+        cursor: pointer;
         transition: background-color 0.3s ease, transform 0.2s ease;
-        margin-top: 0.5rem;
     }
-
-    .apply-button:hover {
-        background-color: #e05300; /* Darker Orange */
-        text-decoration: none;
+    .application-form .submit-button:hover:not(:disabled) {
+        background-color: #e05300;
         transform: translateY(-2px);
     }
+    .application-form .submit-button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+    }
 
-    .back-to-careers {
-        margin-top: 3rem;
+    .form-status-message {
+        margin-top: 1rem;
+        padding: 0.75rem;
+        border-radius: 4px;
+        font-size: 0.95rem;
         text-align: center;
     }
-    .back-to-careers a {
-        color: #1a1a1a; /* Dark grey/black link */
-        text-decoration: none;
-        font-weight: 500;
+    .form-status-message.submitting {
+        background-color: #e9ecef; color: #495057;
     }
-    .back-to-careers a:hover {
-        color: #ff5f00; /* Eraneos Orange on hover */
-        text-decoration: underline;
+    .form-status-message.success {
+        background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;
     }
+    .form-status-message.error {
+        background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;
+    }
+    /* --- END APPLICATION FORM STYLES --- */
+
+    .back-to-careers { margin-top: 3rem; text-align: center; }
+    .back-to-careers a { color: #1a1a1a; text-decoration: none; font-weight: 500; }
+    .back-to-careers a:hover { color: #ff5f00; text-decoration: underline; }
 </style>

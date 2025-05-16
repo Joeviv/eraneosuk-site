@@ -5,33 +5,32 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 const pageTitle = "About Eraneos UK | Cyber Security & Digital Transformation";
 const pageDescription = "Eraneos UK is strengthening its cyber security capabilities and establishing a dedicated team to serve the United Kingdom market. Learn about our commitment to digital trust and innovation, and meet our key experts.";
 
-// This URL is for the main article image, not the team section
-const aboutPageImageUrl = "https://via.placeholder.com/800x400.png/e0e0e0/666666?text=Eraneos+UK+Initiative";
+const aboutPageImageUrl = "/images/about-us/Eraneos_partners.jpg"; // Using your actual image
 
 const ukTeamMembers = [
     {
         name: "Julian Meyrick",
         title: "Partner & Managing Director UK",
         email: "julian.meyrick@eraneos.com",
-        imageUrl: "/images/team/julian-meyrick.jpg" // Corrected path
+        imageUrl: "/images/team/julian-meyrick.jpg"
     },
     {
         name: "Robert Smith",
         title: "Senior Manager Cybersecurity",
         email: "robert.smith@eraneos.com",
-        imageUrl: "/images/team/robert-smith.jpg" // Corrected path
+        imageUrl: "/images/team/robert-smith.jpg"
     },
     {
         name: "Adriana Langdon",
         title: "Senior Cybersecurity Consultant",
         email: "adriana.langdon@eraneos.com",
-        imageUrl: "/images/team/adriana-langdon.jpg" // Corrected path
+        imageUrl: "/images/team/adriana-langdon.jpg"
     },
     {
         name: "Richard Shore",
         title: "Managing Consultant – Life Sciences",
         email: "richard.shore@eraneos.com",
-        imageUrl: "/images/team/richard-shore.jpg" // Corrected path
+        imageUrl: "/images/team/richard-shore.jpg"
     },
     {
         name: "Andrew Van Der Laan",
@@ -41,7 +40,7 @@ const ukTeamMembers = [
     }
 ];
 ---
-<BaseLayout title={pageTitle} description={pageDescription}>
+<BaseLayout title={pageTitle} description={pageDescription}> {/* Uses default headerTheme="light" */}
     <div class="container article-layout">
         <h1>Eraneos Enhances Its Cyber Security Capacity and Establishes Team in the UK</h1>
 
@@ -54,7 +53,7 @@ const ukTeamMembers = [
         </p>
 
         <figure class="featured-image">
-            <img src={aboutPageImageUrl} alt="Eraneos UK initiative illustration" />
+            <img src={aboutPageImageUrl} alt="Eraneos Partners working together" />
             <figcaption>Eraneos is committed to supporting UK businesses with advanced cyber security and digital transformation solutions.</figcaption>
         </figure>
 
@@ -98,7 +97,6 @@ const ukTeamMembers = [
             </p>
         </section>
 
-        <!-- MEET THE TEAM SECTION - NEW -->
         <section class="meet-the-team-section">
             <div class="team-section-header">
                 <span class="eyebrow-text">Contact our experts</span>
@@ -119,8 +117,6 @@ const ukTeamMembers = [
                 ))}
             </div>
         </section>
-        <!-- END MEET THE TEAM SECTION -->
-
 
         <section class="content-section">
             <h2>About Eraneos Group</h2>
@@ -139,37 +135,20 @@ const ukTeamMembers = [
 </BaseLayout>
 
 <style>
-    /* Inherits base font from BaseLayout */
     .container.article-layout {
-        max-width: 960px;
-        margin: 2rem auto 4rem auto;
-        padding: 1rem;
-        line-height: 1.7;
-        color: #212529;
+        max-width: 960px; margin: 2rem auto 4rem auto; padding: 1rem;
+        line-height: 1.7; color: #212529;
     }
-
     .article-layout h1 {
-        font-size: 2.2rem;
-        color: #212529;
-        margin-bottom: 1rem;
-        line-height: 1.3;
-        font-weight: 700;
+        font-size: 2.2rem; color: #212529; margin-bottom: 1rem;
+        line-height: 1.3; font-weight: 700;
     }
-
     .article-layout h2 {
-        font-size: 1.8rem;
-        color: #212529;
-        margin-top: 3rem;
-        margin-bottom: 1.5rem;
-        border-bottom: 1px solid #e0e0e0;
-        padding-bottom: 0.5rem;
-        font-weight: 600;
+        font-size: 1.8rem; color: #212529; margin-top: 3rem; margin-bottom: 1.5rem;
+        border-bottom: 1px solid #e0e0e0; padding-bottom: 0.5rem; font-weight: 600;
     }
-
     .article-layout p.intro {
-        font-size: 1.15rem;
-        color: #555;
-        margin-bottom: 2.5rem;
+        font-size: 1.15rem; color: #555; margin-bottom: 2.5rem;
     }
 
     .featured-image {
@@ -178,6 +157,7 @@ const ukTeamMembers = [
     }
     .featured-image img {
         max-width: 100%;
+        width: 700px; /* Constrain width for larger screens, max-width handles smaller */
         height: auto;
         border-radius: 8px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -186,120 +166,55 @@ const ukTeamMembers = [
         margin-right: auto;
     }
     .featured-image figcaption {
-        font-size: 0.85rem;
-        color: #777;
-        margin-top: 0.75rem;
-        font-style: italic;
-        text-align: center;
+        font-size: 0.85rem; color: #777; margin-top: 0.75rem;
+        font-style: italic; text-align: center;
     }
 
     .article-layout p { margin-bottom: 1.2rem; }
     .article-layout ul { list-style-type: disc; padding-left: 25px; margin-bottom: 1.2rem; }
     .article-layout li { margin-bottom: 0.6rem; }
-    .article-layout a {
-        color: #ff5f00;
-        text-decoration: none;
-        font-weight: 500;
-    }
-    .article-layout a:hover {
-        color: #e05300;
-        text-decoration: underline;
-    }
+    .article-layout a { color: #ff5f00; text-decoration: none; font-weight: 500; }
+    .article-layout a:hover { color: #e05300; text-decoration: underline; }
     .content-section { margin-bottom: 2rem; }
 
-
-    /* --- MEET THE TEAM SECTION STYLES --- */
     .meet-the-team-section {
-        padding: 3rem 0;
-        margin-top: 3rem;
-        border-top: 1px solid #f0f0f0;
+        padding: 3rem 0; margin-top: 3rem; border-top: 1px solid #f0f0f0;
     }
-
-    .team-section-header {
-        text-align: left;
-        margin-bottom: 2.5rem;
-    }
-
+    .team-section-header { text-align: left; margin-bottom: 2.5rem; }
     .team-section-header .eyebrow-text {
-        display: block;
-        font-size: 0.9rem;
-        color: #555;
-        margin-bottom: 0.25rem;
-        font-weight: 500;
-        text-transform: uppercase;
+        display: block; font-size: 0.9rem; color: #555; margin-bottom: 0.25rem;
+        font-weight: 500; text-transform: uppercase;
     }
-
-    .team-section-header h2 { /* This targets the "Let's talk" */
-        font-size: 2.8rem;
-        font-weight: 700;
-        color: #212529;
-        border-bottom: none;
-        margin-top: 0;
-        margin-bottom: 0;
-        padding-bottom: 0;
+    .team-section-header h2 {
+        font-size: 2.8rem; font-weight: 700; color: #212529; border-bottom: none;
+        margin-top: 0; margin-bottom: 0; padding-bottom: 0;
     }
-
     .team-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 2.5rem;
     }
-
-    .team-member-profile {
-        display: flex;
-        align-items: flex-start;
-        gap: 1.5rem;
-        padding: 1rem 0;
-    }
-
-    .team-member-image-wrapper {
-        flex-shrink: 0;
-    }
-
+    .team-member-profile { display: flex; align-items: flex-start; gap: 1.5rem; padding: 1rem 0; }
+    .team-member-image-wrapper { flex-shrink: 0; }
     .team-member-image {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid #e0e0e0;
+        width: 100px; height: 100px; border-radius: 50%;
+        object-fit: cover; border: 2px solid #e0e0e0;
     }
-
-    .team-member-details {
-        flex-grow: 1;
-    }
-
+    .team-member-details { flex-grow: 1; }
     .team-member-name {
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: #212529;
-        margin-top: 0;
-        margin-bottom: 0.25rem;
+        font-size: 1.2rem; font-weight: 600; color: #212529;
+        margin-top: 0; margin-bottom: 0.25rem;
     }
-
     .team-member-title {
-        font-size: 0.9rem;
-        color: #555;
-        margin-bottom: 0.5rem;
-        line-height: 1.4;
+        font-size: 0.9rem; color: #555; margin-bottom: 0.5rem; line-height: 1.4;
     }
-
     .team-member-email {
-        font-size: 0.9rem;
-        color: #ff5f00;
-        text-decoration: none;
-        font-weight: 500;
+        font-size: 0.9rem; color: #ff5f00; text-decoration: none; font-weight: 500;
     }
-    .team-member-email:hover {
-        text-decoration: underline;
-        color: #e05300;
-    }
+    .team-member-email:hover { text-decoration: underline; color: #e05300; }
 
     @media (max-width: 768px) {
-        .team-grid {
-            grid-template-columns: 1fr;
-        }
-        .team-section-header h2 {
-            font-size: 2.2rem;
-        }
+        .team-grid { grid-template-columns: 1fr; }
+        .team-section-header h2 { font-size: 2.2rem; }
+        .featured-image img { width: 100%; /* Allow full width on smaller screens */ }
     }
 </style>

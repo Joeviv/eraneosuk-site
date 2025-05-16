@@ -1,25 +1,33 @@
 ---
 // src/pages/careers/index.astro
-import BaseLayout from '../../layouts/BaseLayout.astro'; // Note the ../../ path
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { allVacanciesData } from '../../data/vacancies.js';
 
 const pageTitle = "Current Vacancies - Eraneos UK Careers";
-const pageDescription = "Explore exciting career opportunities at Eraneos UK. Join our team of experts in digital transformation and consulting in England, UK.";
+const pageDescription = "Explore exciting career opportunities at Eraneos UK. Join our team of experts in Cyber Security, Data & AI, and digital transformation in the UK.";
 
-// In a real application, this data would likely come from a CMS or data files
-const vacancies = [
-    {
-        title: "Senior Manager - Life Science R&D (all genders)",
-        location: "England, UK",
-        shortDescription: "Lead and shape transformative projects in the Life Science R&D sector, leveraging your expertise to drive innovation and client success.",
-        slug: "senior-manager-life-science-rd" // This will form part of the URL
-    },
-    {
-        title: "Senior Data Analyst (all genders)",
-        location: "England, UK",
-        shortDescription: "Analyse complex datasets, generate actionable insights, and contribute to data-driven decision-making for our clients and internal projects.",
-        slug: "senior-data-analyst"
+// Group vacancies by category
+const vacanciesByCategory = allVacanciesData.reduce((acc, vacancy) => {
+    const category = vacancy.category || "Other Opportunities"; // Fallback category
+    if (!acc[category]) {
+        acc[category] = [];
     }
-];
+    acc[category].push(vacancy);
+    return acc;
+}, {});
+
+// Define the order of categories you want to display
+const categoryOrder = ["Cyber Security", "Data & AI", "Other Opportunities"];
+const sortedCategories = Object.keys(vacanciesByCategory).sort((a, b) => {
+    const indexA = categoryOrder.indexOf(a);
+    const indexB = categoryOrder.indexOf(b);
+    if (indexA === -1 && indexB === -1) return a.localeCompare(b); // Sort unknowns alphabetically
+    if (indexA === -1) return 1; // Unknowns go last
+    if (indexB === -1) return -1; // Unknowns go last
+    return indexA - indexB; // Sort by predefined order
+});
+
+const allDefinedCategories = ["Cyber Security", "Data & AI"]; // For displaying even if empty for now
 ---
 <BaseLayout title={pageTitle} description={pageDescription}>
     <div class="container careers-page">
@@ -32,30 +40,43 @@ const vacancies = [
             </p>
         </header>
 
-        <section class="vacancies-list">
-            {vacancies.length > 0 ? (
-                vacancies.map(vacancy => (
-                    <article class="vacancy-card">
-                        <div class="vacancy-card-content">
-                            <h2><a href={`/careers/${vacancy.slug}`}>{vacancy.title}</a></h2>
-                            <p class="vacancy-location">{vacancy.location}</p>
-                            <p class="vacancy-description">{vacancy.shortDescription}</p>
-                        </div>
-                        <a href={`/careers/${vacancy.slug}`} class="view-details-button">
-                            View Details →
-                        </a>
-                    </article>
-                ))
-            ) : (
-                <p>There are currently no open vacancies. Please check back soon.</p>
-            )}
-        </section>
+        <div class="categories-container">
+            {allDefinedCategories.map(categoryName => {
+                const jobsInCategory = vacanciesByCategory[categoryName] || [];
+                return (
+                    <section class="category-section">
+                        <h2 class="category-title">{categoryName}</h2>
+                        {jobsInCategory.length > 0 ? (
+                            <div class="vacancies-list">
+                                {jobsInCategory.map(vacancy => (
+                                    <article class="vacancy-card">
+                                        <div class="vacancy-card-content">
+                                            <h3><a href={`/careers/${vacancy.slug}`}>{vacancy.title}</a></h3>
+                                            <p class="vacancy-meta-info">
+                                                {vacancy.department && <span class="vacancy-department">{vacancy.department}</span>}
+                                                {vacancy.location && <span class="vacancy-location">{vacancy.location}</span>}
+                                            </p>
+                                            {vacancy.shortDescription && <p class="vacancy-description">{vacancy.shortDescription}</p>}
+                                        </div>
+                                        <a href={`/careers/${vacancy.slug}`} class="view-details-button">
+                                            View Details →
+                                        </a>
+                                    </article>
+                                ))}
+                            </div>
+                        ) : (
+                            <p class="no-vacancies-message">There are currently no open positions in this area. Please check back soon or explore other opportunities.</p>
+                        )}
+                    </section>
+                )
+            })}
+        </div>
     </div>
 </BaseLayout>
 
 <style>
     .container.careers-page {
-        max-width: 960px;
+        max-width: 1060px; /* Wider for categories */
         margin: 2rem auto 4rem auto;
         padding: 1rem;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -67,86 +88,106 @@ const vacancies = [
         padding-bottom: 1.5rem;
         border-bottom: 1px solid #e0e0e0;
     }
-
     .page-header h1 {
-        font-size: 2.5rem;
-        color: #1a1a1a; /* Dark grey/black for heading */
-        margin-bottom: 0.5rem;
-        font-weight: 600;
+        font-size: 2.5rem; color: #1a1a1a; margin-bottom: 0.5rem; font-weight: 600;
+    }
+    .page-header .subtitle {
+        font-size: 1.1rem; color: #555; max-width: 700px; margin: 0 auto; line-height: 1.6;
     }
 
-    .page-header .subtitle {
-        font-size: 1.1rem;
-        color: #555;
-        max-width: 700px;
-        margin: 0 auto;
-        line-height: 1.6;
+    .categories-container {
+        /* Styles for the overall container of all categories */
+    }
+
+    .category-section {
+        margin-bottom: 3rem; /* Space between category sections */
+    }
+
+    .category-title {
+        font-size: 1.8rem; /* Title for "Cyber Security", "Data & AI" */
+        color: #212529;
+        font-weight: 600;
+        padding-bottom: 0.75rem;
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid #ff5f00; /* Orange underline for category title */
+        display: inline-block; /* To make border only as wide as text */
     }
 
     .vacancies-list {
         display: grid;
-        gap: 2rem;
+        /* For now, one column for job cards under a category title */
+        grid-template-columns: 1fr;
+        gap: 1.5rem; /* Gap between job cards within a category */
     }
+    @media (min-width: 768px) {
+        /* Potentially 2 columns for job cards on wider screens if many jobs */
+        /* .vacancies-list { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); } */
+    }
+
 
     .vacancy-card {
         background-color: #ffffff;
         border: 1px solid #e0e0e0;
         border-radius: 8px;
-        padding: 1.5rem 2rem;
+        padding: 1.5rem; /* Adjusted padding */
         box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         display: flex;
-        flex-direction: column;
+        flex-direction: column; /* Default, can change to row if image is added */
         justify-content: space-between;
         transition: box-shadow 0.3s ease;
     }
+    .vacancy-card:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 
-    .vacancy-card:hover {
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-
-    .vacancy-card h2 {
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
+    .vacancy-card h3 { /* Changed from h2 for semantic hierarchy under category H2 */
+        font-size: 1.3rem; /* Slightly smaller for job title within card */
+        margin-top: 0;
+        margin-bottom: 0.3rem;
         font-weight: 600;
     }
-    .vacancy-card h2 a {
-        color: #1a1a1a; /* Dark grey/black for link */
-        text-decoration: none;
-    }
-    .vacancy-card h2 a:hover {
-        color: #ff5f00; /* Eraneos Orange on hover */
-        text-decoration: underline;
-    }
+    .vacancy-card h3 a { color: #1a1a1a; text-decoration: none; }
+    .vacancy-card h3 a:hover { color: #ff5f00; text-decoration: underline; }
 
-    .vacancy-location {
-        font-size: 0.95rem;
+    .vacancy-meta-info {
+        font-size: 0.9rem;
         color: #777;
-        margin-bottom: 1rem;
-        font-weight: 500;
+        margin-bottom: 0.75rem;
     }
+    .vacancy-meta-info .vacancy-department,
+    .vacancy-meta-info .vacancy-location {
+        display: inline-block; /* Or block if you want them on separate lines */
+        margin-right: 10px; /* Space between department and location if on same line */
+    }
+    /* Example: Icons for department/location if desired
+    .vacancy-department::before { content: '💼 '; }
+    .vacancy-location::before { content: '📍 '; }
+    */
 
     .vacancy-description {
-        font-size: 1rem;
+        font-size: 0.95rem; /* Short description text */
         color: #444;
         line-height: 1.6;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
     }
 
     .view-details-button {
         display: inline-block;
         align-self: flex-start;
-        background-color: #ff5f00; /* Eraneos Orange */
+        background-color: #ff5f00;
         color: white !important;
-        padding: 0.7rem 1.4rem; /* Slightly adjusted padding */
-        border-radius: 25px; /* Pill shape for consistency */
+        padding: 0.6rem 1.2rem; /* Adjusted */
+        border-radius: 20px; /* Adjusted */
         text-decoration: none;
         font-weight: 500;
+        font-size: 0.9rem; /* Adjusted */
         transition: background-color 0.3s ease, transform 0.2s ease;
     }
-
     .view-details-button:hover {
-        background-color: #e05300; /* Darker Orange */
-        text-decoration: none;
-        transform: translateY(-2px);
+        background-color: #e05300; text-decoration: none; transform: translateY(-2px);
+    }
+
+    .no-vacancies-message {
+        font-style: italic;
+        color: #777;
+        padding: 1rem 0;
     }
 </style>

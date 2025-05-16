@@ -10,171 +10,263 @@ const navLinks = [
 ];
 
 const contactUsLink = { href: "/contact", text: "Contact us" };
-
-const logoText = "eraneos";
+const logoPath = "/images/logo/eraneos_white.svg";
 ---
 <header class="site-header">
     <div class="container">
-        <a href="/" class="logo">{logoText}</a>
-        <nav class="main-navigation">
-            <ul>
-                {navLinks.map(link => (
-                    <li>
-                        {link.href.startsWith('/') ? (
-                            <a href={link.href}>{link.text}</a>
-                        ) : (
-                            <a href={link.href} target="_blank" rel="noopener noreferrer">{link.text}</a>
-                        )}
-                    </li>
-                ))}
-            </ul>
-        </nav>
-        <div class="header-actions">
-            <a href={contactUsLink.href} class="contact-button">{contactUsLink.text}</a>
-            <div class="language-selector">
-                <span>EN</span> {/* Placeholder, add chevron later if desired V */}
-            </div>
-            <div class="search-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <a href="/" class="logo">
+            <img src={logoPath} alt="Eraneos Logo" />
+        </a>
+
+        {/* Desktop Navigation & Actions (will be hidden on mobile) */}
+        <div class="header-desktop-content">
+            <nav class="main-navigation-desktop" aria-label="Main desktop navigation">
+                <ul class="navigation-menu-desktop">
+                    {navLinks.map(link => (
+                        <li>
+                            {link.href.startsWith('/') ? (
+                                <a href={link.href} class="nav-link-desktop">{link.text}</a>
+                            ) : (
+                                <a href={link.href} target="_blank" rel="noopener noreferrer" class="nav-link-desktop">{link.text}</a>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            </nav>
+            <div class="header-actions-desktop">
+                <a href={contactUsLink.href} class="contact-button">{contactUsLink.text}</a>
             </div>
         </div>
+
+        {/* Mobile Menu Toggle (Hamburger Icon from your example) */}
+        <button class="menu-toggle" aria-expanded="false" aria-controls="navigation-menu-mobile">
+            <span class="sr-only">Open menu</span>
+            <span class="hamburger-icon">
+                <span class="line line1"></span>
+                <span class="line line2"></span>
+                <span class="line line3"></span>
+            </span>
+        </button>
     </div>
 </header>
 
+{/* Mobile Navigation Panel (Structure from your example) */}
+{/* Placed outside <header> for easier fixed positioning / stacking context */}
+<nav class="mobile-nav-panel-wrapper" aria-label="Main mobile navigation">
+    <ul id="navigation-menu-mobile" class="navigation-menu-mobile">
+        {navLinks.map(link => (
+            <li>
+                {link.href.startsWith('/') ? (
+                    <a href={link.href} class="nav-link-mobile">{link.text}</a>
+                ) : (
+                    <a href={link.href} target="_blank" rel="noopener noreferrer" class="nav-link-mobile">{link.text}</a>
+                )}
+            </li>
+        ))}
+        <li><hr class="mobile-nav-divider" /></li> {/* Optional Divider */}
+        <li>
+            <a href={contactUsLink.href} class="nav-link-mobile contact-button-mobile">
+                {contactUsLink.text}
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<script>
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navMenuMobile = document.querySelector('#navigation-menu-mobile');
+  const body = document.body;
+
+  if (menuToggle && navMenuMobile) {
+    menuToggle.addEventListener('click', () => {
+      const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true' || false;
+      menuToggle.setAttribute('aria-expanded', String(!isExpanded));
+      navMenuMobile.classList.toggle('is-open');
+      body.classList.toggle('no-scroll-mobile-menu', !isExpanded); // Toggle no-scroll on body
+    });
+
+    // Close menu when a link inside it is clicked
+    const mobileLinks = navMenuMobile.querySelectorAll('a.nav-link-mobile');
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (navMenuMobile.classList.contains('is-open')) {
+                menuToggle.setAttribute('aria-expanded', 'false');
+                navMenuMobile.classList.remove('is-open');
+                body.classList.remove('no-scroll-mobile-menu');
+            }
+        });
+    });
+  }
+</script>
+
 <style>
+    /* --- BASE HEADER STYLES (STICKY, DARK THEME) --- */
     .site-header {
-        background-color: #ffffff;
-        padding: 1rem 0; /* Original Eraneos header can be taller, adjust if needed */
-        border-bottom: 1px solid #e0e0e0; /* Common border color */
-        /* Using a robust system font stack that aims for clarity like Founders Grotesk */
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+        background-color: #111111;
+        padding: 20px 0;
+        position: sticky; top: 0;
+        width: 100%;
+        z-index: 1001; /* Above page content, potentially below mobile panel overlay elements if panel itself isn't highest */
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
-
     .container {
-        /* eraneos.com uses a very wide container, often ~1400px or more, and specific padding */
-        max-width: 1440px; /* Wider container */
-        margin: 0 auto;
-        padding: 0 40px; /* More padding like eraneos.com */
+        max-width: 1320px; margin: 0 auto; padding: 0 20px;
+        display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo img { height: 32px; display: block; }
+
+    /* --- DESKTOP NAVIGATION STYLES --- */
+    .header-desktop-content { /* Wrapper for desktop nav and actions */
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        margin-left: auto; /* Push this group to the right, leaving space for logo */
+    }
+    .main-navigation-desktop {
+        margin-right: 35px; /* Space between nav links and contact button */
+    }
+    .navigation-menu-desktop {
+        display: flex; list-style: none; padding: 0; margin: 0;
+    }
+    .navigation-menu-desktop li { margin-left: 28px; }
+    .navigation-menu-desktop li:first-child { margin-left: 0; }
+    .nav-link-desktop {
+        color: #ffffff; text-decoration: none; font-size: 15px; font-weight: 400;
+        transition: color 0.2s ease; letter-spacing: 0.01em;
+    }
+    .nav-link-desktop:hover, .nav-link-desktop:focus { color: #cccccc; }
+
+    .header-actions-desktop .contact-button {
+        color: #ffffff !important; border: 1px solid #ffffff; background-color: transparent;
+        padding: 9px 22px; text-decoration: none; border-radius: 20px;
+        font-weight: 500; font-size: 15px;
+        transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        line-height: 1.4; display: inline-block; white-space: nowrap;
+    }
+    .header-actions-desktop .contact-button:hover {
+        background-color: rgba(255, 255, 255, 0.15); border-color: #f0f0f0;
     }
 
-    .logo {
-        font-size: 1.8rem; /* eraneos.com logo text is not overly large */
-        font-weight: 700; /* Bold */
-        color: #000000; /* Black logo text */
-        text-decoration: none;
-        letter-spacing: -0.5px;
+    /* --- MOBILE MENU TOGGLE & ICON (FROM YOUR EXAMPLE) --- */
+    .menu-toggle {
+        display: none; /* Hidden on desktop by default */
+        background: none; border: none; color: white; cursor: pointer;
+        padding: 0.5rem; /* From your example */
+        z-index: 10002; /* Must be on top of everything, including open panel */
+        position: relative; /* For hamburger line positioning */
+        /* margin-left: auto; /* Ensures it's on the right when desktop content is hidden */
+    }
+    .hamburger-icon { width: 24px; height: 18px; position: relative; display: inline-block; }
+    .hamburger-icon .line {
+        display: block; position: absolute; height: 3px; width: 100%;
+        background: #fff; border-radius: 3px; opacity: 1; left: 0;
+        transform: rotate(0deg); transition: .25s ease-in-out;
+    }
+    .line1 { top: 0px; }
+    .line2 { top: 7px; }
+    .line3 { top: 14px; }
+    .menu-toggle[aria-expanded="true"] .line1 { top: 7px; transform: rotate(135deg); }
+    .menu-toggle[aria-expanded="true"] .line2 { opacity: 0; left: -24px; }
+    .menu-toggle[aria-expanded="true"] .line3 { top: 7px; transform: rotate(-135deg); }
+    .sr-only {
+        position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+        overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;
     }
 
-    .main-navigation {
-        /* This positions the nav more centrally if there's space */
-        margin-left: auto; /* Pushes nav away from logo if actions are also pushed right */
-        margin-right: 30px; /* Space before header actions */
+    /* --- MOBILE NAVIGATION PANEL (FROM YOUR EXAMPLE, ADAPTED FOR ERANEOS) --- */
+    .mobile-nav-panel-wrapper { /* This wrapper might not be strictly needed if ul is styled directly */
+        /* No styles needed on wrapper if #navigation-menu-mobile handles all positioning */
+    }
+    .navigation-menu-mobile {
+        display: flex; flex-direction: column; align-items: center;
+        list-style: none; padding: 0; margin: 0;
+        position: fixed;
+        top: 0;
+        left: 0; /* Start from left for slide-in */
+        width: 85%; /* Panel width */
+        max-width: 320px; /* Max panel width */
+        height: 100vh; /* Full viewport height */
+        background-color: #111111; /* Dark background, same as header */
+        z-index: 10000; /* Below toggle button, above site header (when open) */
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(-100%); /* Start off-screen to the left */
+        transition: opacity 0.3s ease, visibility 0s linear 0.3s, transform 0.3s ease-in-out;
+        padding-top: 80px; /* Space for the sticky site header to show above */
+        box-shadow: 3px 0px 15px rgba(0,0,0,0.2); /* Shadow on the right edge */
+        overflow-y: auto; /* Allow scrolling if many links */
+    }
+    .navigation-menu-mobile.is-open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0%); /* Slides in from the left */
+        transition-delay: 0s, 0s, 0s; /* Ensure visibility transition is immediate */
     }
 
-    .main-navigation ul {
-        list-style: none;
+    .navigation-menu-mobile li {
         margin: 0;
-        padding: 0;
-        display: flex;
+        width: 100%; /* Links take full width of panel */
+        text-align: left;
     }
-
-    .main-navigation li {
-        margin-left: 32px; /* Spacing from eraneos.com inspection */
-    }
-
-    .main-navigation a {
-        text-decoration: none;
-        color: #212529; /* Darker grey, almost black, for text */
-        font-weight: 500; /* Or 400 depending on how "Founders Grotesk Regular" renders */
-        font-size: 0.9rem; /* eraneos.com nav links are not very large */
-        transition: color 0.2s ease-in-out;
-        text-transform: capitalize; /* 'Our impact' vs 'Our Impact' etc. Eraneos uses sentence case mostly */
-    }
-
-    .main-navigation a:hover {
-        color: #ff5f00; /* Eraneos Orange on hover */
-    }
-
-    .header-actions {
-        display: flex;
-        align-items: center;
-    }
-
-    .contact-button {
-        background-color: #000000; /* Black button */
-        color: #ffffff !important;
-        padding: 10px 20px; /* Adjusted padding based on eraneos.com */
-        text-decoration: none;
-        border-radius: 4px; /* Slightly rounded */
-        font-weight: 500;
-        font-size: 0.9rem;
-        margin-right: 25px; /* Spacing */
-        transition: background-color 0.3s ease, color 0.3s ease;
-        line-height: 1.5; /* Ensure text is vertically centered well */
-    }
-
-    .contact-button:hover {
-        background-color: #333333;
-        color: #ffffff !important;
-        text-decoration: none;
-    }
-
-    .language-selector {
-        margin-right: 25px; /* Spacing */
-        color: #212529; /* Dark text */
-        font-size: 0.9rem;
-        font-weight: 500;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-    }
-     .language-selector span {
-        padding: 5px 0; /* Padding only top/bottom if no border */
-     }
-     /* For a chevron:
-     .language-selector::after {
-        content: '⌄'; // or an SVG icon
-        margin-left: 5px;
-     }
-     */
-
-    .search-icon {
-        color: #212529; /* Dark icon */
-        cursor: pointer;
-    }
-    .search-icon svg {
+    .nav-link-mobile {
         display: block;
+        padding: 0.9rem 1.5rem; /* Padding for tap targets */
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 1.1rem; /* Mobile link font size */
+        font-weight: 500;
+        border-bottom: 1px solid #2b2b2b; /* Subtle separator */
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    .navigation-menu-mobile li:first-child .nav-link-mobile {
+        /* Optional: border-top: 1px solid #2b2b2b; */
+    }
+    .navigation-menu-mobile li:last-child .nav-link-mobile {
+        /* border-bottom: none; /* No border on the very last item */
+    }
+    .nav-link-mobile:hover, .nav-link-mobile:focus {
+        background-color: #222222; /* Darker highlight on hover */
+        color: #ff5f00; /* Eraneos orange for hover text */
+    }
+    .mobile-nav-divider {
+        border: none; border-top: 1px solid #444444; margin: 0.5rem 1.5rem; /* Divider within list */
+    }
+    .contact-button-mobile {
+        /* Special styling for contact button in mobile menu */
+        margin: 1rem 1.5rem 1.5rem 1.5rem; /* Add some margin around it */
+        padding: 0.75rem 1rem !important; /* Ensure padding */
+        border: 1px solid #ffffff;
+        border-radius: 20px;
+        display: block; /* Make it block for centering and full-width feel */
+        text-align: center;
+        font-weight: 500;
+        color: #ffffff !important;
+    }
+    .contact-button-mobile:hover {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        color: #ffffff !important; /* Keep text white */
     }
 
-    /* Responsive Adjustments - eraneos.com has a sophisticated mobile menu */
-    @media (max-width: 1024px) { /* Breakpoint when nav might get too crowded */
-        .main-navigation {
-            display: none;
+    /* --- RESPONSIVE BREAKPOINTS --- */
+    @media (max-width: 1024px) { /* Breakpoint where mobile menu activates */
+        .header-desktop-content {
+            display: none; /* Hide desktop navigation and contact button */
         }
-        .language-selector {
-             /* display: none; Keep it for now, eraneos shows it */
+        .menu-toggle {
+            display: block; /* Show hamburger toggle */
+            /* margin-left: auto; /* If not already pushed by justify-content on container */
         }
     }
-     @media (max-width: 768px) {
-        .contact-button {
-            /* display: none; Eraneos still shows it on smaller tablets */
-        }
-        .container {
-             padding: 0 20px; /* Less padding on smaller screens */
-        }
-        .logo {
-            font-size: 1.6rem;
-        }
-        .language-selector, .search-icon {
-            /* Optionally hide on very small screens if header is too cluttered */
-        }
-     }
-     @media (max-width: 480px) { /* Mobile phones */
-        .contact-button { display: none; }
-        .language-selector { display: none; }
-        .header-actions { margin-left: auto; } /* Push search icon to far right if others hidden */
-     }
+
+    @media (max-width: 768px) { /* Further adjustments for smaller screens */
+        .site-header { padding: 15px 0; }
+        .container { padding: 0 15px; }
+        .logo img { height: 28px; }
+        .navigation-menu-mobile { padding-top: 70px; /* Adjust for smaller header height */ }
+        .nav-link-mobile { font-size: 1rem; padding: 0.8rem 1.2rem; }
+        .contact-button-mobile { margin: 0.8rem 1.2rem 1.2rem 1.2rem; }
+    }
+
+    .no-scroll-mobile-menu {
+        overflow: hidden; /* Prevent body scroll when mobile menu is open */
+    }
 </style>
